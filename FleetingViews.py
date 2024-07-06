@@ -23,6 +23,7 @@ class FleetingViews:
         # Stablishes control variables as the last added View
         self.actual_view = views[last_view]
         self.prev_views = []
+        self.working_view = views[last_view]
 
 
     def view_go(self, view_name:str, back: bool = False):
@@ -51,8 +52,6 @@ class FleetingViews:
 
             self.actual_view = self.views[view_name]
             self.page.update()
-
-            print(self.prev_views)
         else:
             raise ValueError(f"{view_name} is not a view of this FleetingViews")
         
@@ -78,7 +77,7 @@ class FleetingViews:
     def append(self, view_name, controls):
         """
         Adds a control or a list of controls to a specific view. 
-        If the working view is the same as the argument, behaves like the append method.
+        If the working view is the same as the argument, behaves like the wadd method.
 
         Args:
             view_name (str): The name of the view to add the control(s) to.
@@ -92,13 +91,30 @@ class FleetingViews:
             if isinstance(controls, list):
                 for control in controls:
                     self.views[view_name].controls.append(control)
-                    self.page.update()
             else:
                 self.views[view_name].controls.append(controls)
-                self.page.update()
             self.page.update()
         else:
             raise ValueError(f"{view_name} is not a view of this FleetingViews")
+        
+    def wadd(self, controls):
+        """
+        Adds a control or a list of controls to the working view. 
+
+
+        Args:
+            controls (Union[Control, List[Control]]): The control or list of controls to add.
+
+        Raises:
+            ValueError: If the view name is not in the views dictionary.
+        """
+        if isinstance(controls, list):
+            for control in controls:
+                self.working_view.controls.append(control)
+        else:
+            self.working_view.controls.append(controls)
+        self.page.update()
+
 
 def initialize_view(view:ft.View, page: ft.Page):
     page.views.append(view)
