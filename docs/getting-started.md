@@ -45,13 +45,13 @@ Now, to visit any of your views, just use the method view_go:
 fv.view_go("name_of_view")
 ```
 ## Adding controls to views
-FlletingViews currently support 2 ways of adding controls to any view:
-1. You can add controls to any page as follows:
+FletingViews currently support 2 ways of adding controls to any view:
+    1. You can add controls to any page as follows:
 ```python
 fv.append("view_name", controls)
 ```
 where controls can either be a single Flet object or a list (use [] if there are multiple controls).
-2. Alternatively, you can use the 'wadd' method:
+    2. Alternatively, you can use the 'wadd' method:
 ```python
 fv.wadd(controls)
 ```
@@ -62,3 +62,18 @@ If you want to change the working view (for all future 'wadd' calls) use:
 ```python
 fv.set_working("view_name")
 ```
+
+## Going back
+To go back use the 'go_back' method:
+```python
+fv.go_back()
+```
+FleetingViews considers possible routes a user might take, ensuring they won't get stuck in a loop. Once there's no more back history, the back actions return users to the root page.
+
+Additionally, the 'clean' methods erases all history, that means the next 'go_back' call will return the root page.
+
+## Basic FleetingViews desing
+
+![Routing image](routing.png)
+
+
