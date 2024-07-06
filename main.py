@@ -27,10 +27,10 @@ def main(page: ft.Page):
 
     # Counter function to update visit count
     def counter(view):
-        text = fleetingViews.views_dict[view].controls[0].content.value
+        text = fleetingViews.views[view].controls[0].content.value
         number_of_times = int(text.split(" ")[-2])
         number_of_times += 1
-        fleetingViews.views_dict[view].controls[0].content.value = f"IM THE TEXT OF PAGE {view} {number_of_times} times"
+        fleetingViews.views[view].controls[0].content.value = f"IM THE TEXT OF PAGE {view} {number_of_times} times"
         fleetingViews.view_go(view)
 
     # Set up content and buttons for the views
@@ -73,7 +73,7 @@ def main(page: ft.Page):
 
     # Example to get data from a view
     def get_data(e, view):
-        data_in_project_view = fleetingViews.views_dict['projects'].controls[0].content.value.split(" ")[-2]
+        data_in_project_view = fleetingViews.views['projects'].controls[0].content.value.split(" ")[-2]
         print(data_in_project_view)
         e.control.text = f"The {view} page has been visited {data_in_project_view} times"
         page.update()
