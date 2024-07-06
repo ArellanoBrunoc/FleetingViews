@@ -74,6 +74,6 @@ Additionally, the 'clean' methods erases all history, that means the next 'go_ba
 
 ## Basic FleetingViews desing
 
-![Routing image](routing.png)
+![Routing image](routing2.png)
 
 
