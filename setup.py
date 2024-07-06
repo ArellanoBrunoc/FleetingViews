@@ -6,11 +6,11 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name="fleeting-views",
+    name="fleetingviews",
     version="0.1.0",
     author="Bruno Arellano",
     author_email="arellanobruno@hotmail.com",
-    packages=["fleeting_views"],
+    py_modules=['FleetingViews'],
     license="MIT",
     maintainer="Bruno Arellano",
     maintainer_email="arellanobruno@hotmail.com",
