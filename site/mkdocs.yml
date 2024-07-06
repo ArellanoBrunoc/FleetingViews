@@ -3,9 +3,7 @@ repo_url: https://github.com/ArellanoBrunoc/FleetingViews
 repo_name: ArellanoBrunoc/FleetingViews
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 theme:
-  name: material 
-  logo: logo.png
-  favicon: favicon.ico
+  name: material  
   icon:
     repo: fontawesome/brands/github
 

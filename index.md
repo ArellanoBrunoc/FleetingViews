@@ -13,5 +13,8 @@ pip install fleeting-views
 pip install fleeting-views --upgrade
 ```
 
+## Why FleetingViews?
+
+FleetingViews was developed to provide a simple solution for managing views in Flet applications. By defining only the views you need and customizing them as required, you can quickly set up and manage your application's user interface.
 
 #### [Repository](https://arellanobrunoc.github.io/FleetingViews/)

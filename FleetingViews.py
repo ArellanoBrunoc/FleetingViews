@@ -54,7 +54,6 @@ class FleetingViews:
             self.page.update()
         else:
             raise ValueError(f"{view_name} is not a view of this FleetingViews")
-        
     def go_back(self):
 
         """
@@ -113,6 +112,17 @@ class FleetingViews:
                 self.working_view.controls.append(control)
         else:
             self.working_view.controls.append(controls)
+        self.page.update()
+        
+    def set_working(self, view_name):
+        view_name = view_name.lower()
+        if isinstance(view_name, str):
+            if view_name in self.views.keys():
+                self.working_view = self.views[view_name]
+            else:
+                raise ValueError(f"{view_name} is not a view of this FleetingViews")
+        else:
+            raise ValueError(f"{view_name} is not a string")
         self.page.update()
 
 
