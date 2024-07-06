@@ -1,0 +1,22 @@
+site_name: FleetingViews
+repo_url: https://github.com/ArellanoBrunoc/FleetingViews
+repo_name: ArellanoBrunoc/FleetingViews
+theme:
+  name: material  
+  icon:
+    repo: fontawesome/brands/github
+
+  palette:
+    scheme: slate
+    primary: blue
+
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - navigation.footer
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Features: features.md
+
+
