@@ -22,5 +22,5 @@ pip install fleeting-views --upgrade
 
 <b>Name :</b> Bruno Arellano<br>
 <b>Email :</b> arellanobruno@hotmail.com<br>
-<b>Country :</b> COLOMBIAco<br>
+<b>Country :</b> COLOMBIA<br>
 
