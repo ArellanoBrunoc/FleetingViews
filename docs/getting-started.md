@@ -1,22 +1,15 @@
 # Getting Started
-
 ## Installation
 To install FleetingViews, use the following command:
 ```bash
 pip install fleetingviews
-
 ```
 ## Import
 ```python
 import FleetingViews as fleetingviews
-
 ```
-
-
 ## Utilization
-
 Once you have already installed FleetingViews, all you need to do is define your Views in as the following example:
-
 ```python
     # View definitions with specific configurations
     view_definitions = {
@@ -43,43 +36,29 @@ Once you have already installed FleetingViews, all you need to do is define your
 
 Now, with our definitions in hand, just initialize a FleetingViews object as follows:
 
-
 ```python
 fv = fleetingviews.create_views(view_definitions=view_definitions, page=page)
 ```
-
 You're done!, just 1 line of code.
-
 Now, to visit any of your views, just use the method view_go:
-
 ```python
 fv.view_go("name_of_view")
 ```
-
 ## Adding controls to views
-
 FlletingViews currently support 2 ways of adding controls to any view:
-
 1. You can add controls to any page as follows:
-
 ```python
 fv.append("view_name", controls)
 ```
 where controls can either be a single Flet object or a list (use [] if there are multiple controls).
-
 2. Alternatively, you can use the 'wadd' method:
-
 ```python
 fv.wadd(controls)
 ```
-
 ### Note
 * The wadd method adds those controls to the current working view. By default, this is the last view you declared. Though similar to append, wadd is intended to be less verbose and cleaner.
 * Both methods call page.update() so you don't have to use it in your code.
-
-
 If you want to change the working view (for all future 'wadd' calls) use:
-
 ```python
 fv.set_working("view_name")
 ```
