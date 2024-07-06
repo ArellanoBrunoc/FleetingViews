@@ -15,7 +15,7 @@
         <link rel="next" href="../features/">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../favicon.ico">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
     
     
@@ -88,8 +88,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="FleetingViews" class="md-header__button md-logo" aria-label="FleetingViews" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <img src="../logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -195,8 +194,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="FleetingViews" class="md-nav__button md-logo" aria-label="FleetingViews" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <img src="../logo.png" alt="logo">
 
     </a>
     FleetingViews
@@ -306,6 +304,54 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#utilization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utilization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Utilization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    <span class="md-ellipsis">
+      Note
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-controls-to-views" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding controls to views
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding controls to views">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Note
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -378,6 +424,54 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#utilization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utilization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Utilization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    <span class="md-ellipsis">
+      Note
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-controls-to-views" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding controls to views
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding controls to views">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Note
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -402,7 +496,61 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>fleetingviews
 </code></pre></div></p>
 <h2 id="import">Import</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">FleetingViews</span> <span class="k">as</span> <span class="nn">fv</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">FleetingViews</span> <span class="k">as</span> <span class="nn">fleetingviews</span>
+</code></pre></div>
+<h2 id="utilization">Utilization</h2>
+<p>Once you have already installed FleetingViews, all you need to do is define your Views in as the following example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    <span class="c1"># View definitions with specific configurations</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">view_definitions</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>            <span class="s1">&#39;bgcolor&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">BLUE_GREY</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>            <span class="s1">&#39;vertical_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">MainAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>            <span class="s1">&#39;horizontal_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">CrossAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="p">},</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="s1">&#39;settings&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>            <span class="s1">&#39;bgcolor&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">AMBER_900</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>            <span class="s1">&#39;vertical_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">MainAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>            <span class="s1">&#39;horizontal_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">CrossAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="p">},</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>            <span class="s1">&#39;bgcolor&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">BLACK</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>            <span class="s1">&#39;vertical_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">MainAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>            <span class="s1">&#39;horizontal_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">CrossAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="p">}</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="p">}</span>
+</code></pre></div>
+<h3 id="note">Note</h3>
+<ul>
+<li>If a view argument is omitted, it will default to Flet's standard value.</li>
+<li>You can add your views in any order you prefer, but keep in mind that the first one ("home" in the example) will be set as the root view.</li>
+</ul>
+<p>Now, with our definitions in hand, just initialize a FleetingViews object as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">fv</span> <span class="o">=</span> <span class="n">fleetingviews</span><span class="o">.</span><span class="n">create_views</span><span class="p">(</span><span class="n">view_definitions</span><span class="o">=</span><span class="n">view_definitions</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+</code></pre></div>
+<p>You're done!, just 1 line of code.</p>
+<p>Now, to visit any of your views, just use the method view_go:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">view_go</span><span class="p">(</span><span class="s2">&quot;name_of_view&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="adding-controls-to-views">Adding controls to views</h2>
+<p>FlletingViews currently support 2 ways of adding controls to any view:</p>
+<ol>
+<li>You can add controls to any page as follows:</li>
+</ol>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">,</span> <span class="n">controls</span><span class="p">)</span>
+</code></pre></div>
+where controls can either be a single Flet object or a list (use [] if there are multiple controls).</p>
+<ol>
+<li>Alternatively, you can use the 'wadd' method:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">wadd</span><span class="p">(</span><span class="n">controls</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="note_1">Note</h3>
+<ul>
+<li>The wadd method adds those controls to the current working view. By default, this is the last view you declared. Though similar to append, wadd is intended to be less verbose and cleaner.</li>
+<li>Both methods call page.update() so you don't have to use it in your code.</li>
+</ul>
+<p>If you want to change the working view (for all future 'wadd' calls) use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">set_working</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 
