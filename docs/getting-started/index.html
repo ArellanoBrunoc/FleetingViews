@@ -499,7 +499,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">FleetingViews</span> <span class="k">as</span> <span class="nn">fleetingviews</span>
 </code></pre></div>
 <h2 id="utilization">Utilization</h2>
-<p>Once you have already installed FleetingViews, all you need to do is define your Views in as the following example:</p>
+<p>Once you have already installed FleetingViews, all you need to do is define your Views in as the following example:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    <span class="c1"># View definitions with specific configurations</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">view_definitions</span> <span class="o">=</span> <span class="p">{</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -518,40 +518,36 @@
 <a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>            <span class="s1">&#39;horizontal_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">CrossAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span>
 <a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="p">}</span>
 <a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="p">}</span>
-</code></pre></div>
+</code></pre></div></p>
 <h3 id="note">Note</h3>
 <ul>
 <li>If a view argument is omitted, it will default to Flet's standard value.</li>
 <li>You can add your views in any order you prefer, but keep in mind that the first one ("home" in the example) will be set as the root view.</li>
 </ul>
 <p>Now, with our definitions in hand, just initialize a FleetingViews object as follows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">fv</span> <span class="o">=</span> <span class="n">fleetingviews</span><span class="o">.</span><span class="n">create_views</span><span class="p">(</span><span class="n">view_definitions</span><span class="o">=</span><span class="n">view_definitions</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">fv</span> <span class="o">=</span> <span class="n">fleetingviews</span><span class="o">.</span><span class="n">create_views</span><span class="p">(</span><span class="n">view_definitions</span><span class="o">=</span><span class="n">view_definitions</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
 </code></pre></div>
-<p>You're done!, just 1 line of code.</p>
-<p>Now, to visit any of your views, just use the method view_go:</p>
+You're done!, just 1 line of code.
+Now, to visit any of your views, just use the method view_go:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">view_go</span><span class="p">(</span><span class="s2">&quot;name_of_view&quot;</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></p>
 <h2 id="adding-controls-to-views">Adding controls to views</h2>
-<p>FlletingViews currently support 2 ways of adding controls to any view:</p>
-<ol>
-<li>You can add controls to any page as follows:</li>
-</ol>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">,</span> <span class="n">controls</span><span class="p">)</span>
+<p>FlletingViews currently support 2 ways of adding controls to any view:
+1. You can add controls to any page as follows:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">,</span> <span class="n">controls</span><span class="p">)</span>
 </code></pre></div>
-where controls can either be a single Flet object or a list (use [] if there are multiple controls).</p>
-<ol>
-<li>Alternatively, you can use the 'wadd' method:</li>
-</ol>
+where controls can either be a single Flet object or a list (use [] if there are multiple controls).
+2. Alternatively, you can use the 'wadd' method:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">wadd</span><span class="p">(</span><span class="n">controls</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></p>
 <h3 id="note_1">Note</h3>
 <ul>
 <li>The wadd method adds those controls to the current working view. By default, this is the last view you declared. Though similar to append, wadd is intended to be less verbose and cleaner.</li>
-<li>Both methods call page.update() so you don't have to use it in your code.</li>
-</ul>
-<p>If you want to change the working view (for all future 'wadd' calls) use:</p>
+<li>Both methods call page.update() so you don't have to use it in your code.
+If you want to change the working view (for all future 'wadd' calls) use:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">set_working</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div></li>
+</ul>
 
 
 
