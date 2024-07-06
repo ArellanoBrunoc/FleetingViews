@@ -15,7 +15,7 @@ pip install fleeting-views --upgrade
 ```
 
 
-#### [Documentation ](https://arellanobrunoc.github.io/fletingviews-docs)
+#### [Documentation ](https://arellanobrunoc.github.io/FleetingViews/)
 
 
 ## Author
