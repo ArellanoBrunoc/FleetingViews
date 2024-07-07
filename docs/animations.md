@@ -20,7 +20,7 @@ For example, let's initialize some views in our project:
         }
 
     fv = fleetingviews.create_views(view_definitions=view_definitions, page=page)
- ```
+```
 
 Now, all that is left is to call one of the methods as follows:
 
