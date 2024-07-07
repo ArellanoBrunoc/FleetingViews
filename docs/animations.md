@@ -1,6 +1,6 @@
 # Animations
 
-## V0.1.1
+## Availible from V0.1.1
 
 This version of FleetingViews now enables view transitions with customizable position and duration for every 'view_go' and "go_back" call.
 
@@ -32,14 +32,14 @@ By adding the duration parameter with a value above 0, FleetingViews will know t
 
 You can also declare the animation mode that you prefer from the options below:
 
-## 1. top_left (default)
-## 2. top
-## 3. top_right
-## 4. right
-## 5. bottom_right
-## 6. bottom
-## 7. bottom_left
-## 8. left
+### 1. top_left (default)
+### 2. top
+### 3. top_right
+### 4. right
+### 5. bottom_right
+### 6. bottom
+### 7. bottom_left
+### 8. left
 
 ```python
     #For example
