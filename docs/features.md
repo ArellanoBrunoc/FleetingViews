@@ -14,7 +14,7 @@ Easily add controls to specific views with custom appends methods.
 ### 4. Clear Method: 
 Reset the view history with a simple clear method.
 
-## V(0.1.1)
+## V(1.0.0)
 
 ### View Change Custom Animations!
 Easily add transitions for any `view_go()` call with custom duration and modes.

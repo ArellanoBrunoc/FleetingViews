@@ -1,6 +1,6 @@
 # Animations
 
-## Availible from V0.1.1
+## Availible from V1.0.0
 
 This version of FleetingViews now enables view transitions with customizable position and duration for every `view_go()` and `go_back()` call.
 
