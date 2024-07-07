@@ -584,7 +584,7 @@
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">fv</span> <span class="o">=</span> <span class="n">fleetingviews</span><span class="o">.</span><span class="n">create_views</span><span class="p">(</span><span class="n">view_definitions</span><span class="o">=</span><span class="n">view_definitions</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
 </code></pre></div>
 You're done!, just 1 line of code.
-Now, to visit any of your views, just use the method view_go:
+Now, to visit any of your views, just use the method <code>view_go()</code>:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">view_go</span><span class="p">(</span><span class="s2">&quot;name_of_view&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <h2 id="adding-controls-to-views">Adding controls to views</h2>
@@ -594,18 +594,18 @@ Now, to visit any of your views, just use the method view_go:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">,</span> <span class="n">controls</span><span class="p">)</span>
 </code></pre></div></li>
 </ol>
-<p>where controls can either be a single Flet object or a list (use [ ] if there are multiple controls).</p>
+<p>where controls can either be a single Flet object or a list (use <code>[ ]</code> if there are multiple controls).</p>
 <ol>
-<li>Alternatively, you can use the 'wadd' method:
+<li>Alternatively, you can use the <code>wadd()</code> method:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">wadd</span><span class="p">(</span><span class="n">controls</span><span class="p">)</span>
 </code></pre></div></li>
 </ol>
 <h3 id="note_1">Note</h3>
 <ul>
-<li>The wadd method adds those controls to the current working view. By default, this is the last view you declared. Though similar to append, wadd is intended to be less verbose and cleaner.</li>
-<li>Both methods call page.update() so you don't have to use it in your code.</li>
+<li>The wadd method adds those controls to the current working view. By default, this is the last view you declared. Though similar to append, <code>wadd</code> is intended to be less verbose and cleaner.</li>
+<li>Both methods call <code>page.update()</code> so you don't have to use it in your code.</li>
 </ul>
-<p>If you want to change the working view (for all future 'wadd' calls) use:</p>
+<p>If you want to change the working view (for all future <code>wadd()</code> calls) use:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">set_working</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="going-back">Going back</h2>
@@ -613,7 +613,7 @@ Now, to visit any of your views, just use the method view_go:
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">go_back</span><span class="p">()</span>
 </code></pre></div>
 FleetingViews considers possible routes a user might take, ensuring they won't get stuck in a loop. Once there's no more back history, the back actions return users to the root page.</p>
-<p>Additionally, the 'clean' methods erases all history, that means the next 'go_back' call will return the root page.</p>
+<p>Additionally, the <code>clean()</code> methods erases all history, that means the next <code>go_back()</code> call will return the root page.</p>
 <h2 id="basic-fleetingviews-design">Basic FleetingViews design</h2>
 <p><img alt="Routing image" src="../routing.png" /></p>
 
