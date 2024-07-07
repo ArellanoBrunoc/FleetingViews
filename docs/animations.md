@@ -2,7 +2,7 @@
 
 ## Availible from V0.1.1
 
-This version of FleetingViews now enables view transitions with customizable position and duration for every 'view_go' and "go_back" call.
+This version of FleetingViews now enables view transitions with customizable position and duration for every `view_go()` and `go_back()` call.
 
 For example, let's initialize some views in our project:
 
