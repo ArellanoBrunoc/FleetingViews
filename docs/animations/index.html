@@ -315,6 +315,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#1-top_left-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. top_left (default)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-top" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. top
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-top_right" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. top_right
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. right
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-bottom_right" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. bottom_right
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-bottom" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. bottom
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-bottom_left" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. bottom_left
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-left" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. left
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -378,6 +450,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#1-top_left-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. top_left (default)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-top" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. top
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-top_right" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. top_right
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. right
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-bottom_right" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. bottom_right
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-bottom" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. bottom
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-bottom_left" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. bottom_left
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-left" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. left
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -399,43 +543,39 @@
 <h1 id="animations">Animations</h1>
 <h2 id="v011">V0.1.1</h2>
 <p>This version of LfeetingViews now enables view transitions with customizable position and duration for every 'view_go' and "go_back" calls.</p>
-<p>For example, let's initialize some views in our project:</p>
-<div class="highlight"><pre><span></span><code>```python
-    # View definitions with specific configurations
-    view_definitions = {
-        &#39;home&#39;: {
-            &#39;bgcolor&#39;: ft.colors.RED,
-            &#39;vertical_alignment&#39;: ft.MainAxisAlignment.CENTER,
-            &#39;horizontal_alignment&#39;: ft.CrossAxisAlignment.CENTER
-        },
-        &#39;projects&#39;: {
-            &#39;bgcolor&#39;: ft.colors.PURPLE,
-        }
-    }
-
-    fv = fleetingviews.create_views(view_definitions=view_definitions, page=page)
-```
-</code></pre></div>
-<p>Now, all there is left is to call one of the said methods as follows:</p>
-<div class="highlight"><pre><span></span><code>```python
-   fv.view_go(&quot;projects&quot;, duration=300)
-```
+<p>For example, let's initialize some views in our project</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    <span class="c1"># View definitions with specific configurations</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">view_definitions</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>            <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                <span class="s1">&#39;bgcolor&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">RED</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                <span class="s1">&#39;vertical_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">MainAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                <span class="s1">&#39;horizontal_alignment&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">CrossAxisAlignment</span><span class="o">.</span><span class="n">CENTER</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>            <span class="p">},</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                <span class="s1">&#39;bgcolor&#39;</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>            <span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="p">}</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">fv</span> <span class="o">=</span> <span class="n">fleetingviews</span><span class="o">.</span><span class="n">create_views</span><span class="p">(</span><span class="n">view_definitions</span><span class="o">=</span><span class="n">view_definitions</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a> <span class="err">```</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">Now</span><span class="p">,</span> <span class="nb">all</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">left</span> <span class="ow">is</span> <span class="n">to</span> <span class="n">call</span> <span class="n">one</span> <span class="n">of</span> <span class="n">the</span> <span class="n">said</span> <span class="n">methods</span> <span class="k">as</span> <span class="n">follows</span><span class="p">:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="err">```</span><span class="n">python</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">view_go</span><span class="p">(</span><span class="s2">&quot;projects&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 </code></pre></div>
 <p>By adding the duration parameter with a value above 0, FleetingView will know that the call is intended to have an animation that lasts 'duration' miliseconds.</p>
 <p>You can also declare the animation mode that you prefer from the options below:</p>
-<div class="highlight"><pre><span></span><code>## 1. top_left (default)
-## 2. top
-## 3. top_right
-## 4. right
-## 5. bottom_right
-## 6. bottom
-## 7. bottom_left
-## 8. left
-
-```python
-#For example
-   fv.view_go(&quot;projects&quot;, duration=300, mode=&quot;right&quot;)
-```
+<h2 id="1-top_left-default">1. top_left (default)</h2>
+<h2 id="2-top">2. top</h2>
+<h2 id="3-top_right">3. top_right</h2>
+<h2 id="4-right">4. right</h2>
+<h2 id="5-bottom_right">5. bottom_right</h2>
+<h2 id="6-bottom">6. bottom</h2>
+<h2 id="7-bottom_left">7. bottom_left</h2>
+<h2 id="8-left">8. left</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>    <span class="c1">#For example</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">view_go</span><span class="p">(</span><span class="s2">&quot;projects&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 

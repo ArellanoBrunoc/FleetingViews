@@ -591,13 +591,13 @@ Now, to visit any of your views, just use the method view_go:
 <p>FletingViews currently support 2 ways of adding controls to any view:</p>
 <ol>
 <li>You can add controls to any page as follows:
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">,</span> <span class="n">controls</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">,</span> <span class="n">controls</span><span class="p">)</span>
 </code></pre></div></li>
 </ol>
 <p>where controls can either be a single Flet object or a list (use [ ] if there are multiple controls).</p>
 <ol>
 <li>Alternatively, you can use the 'wadd' method:
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">wadd</span><span class="p">(</span><span class="n">controls</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">wadd</span><span class="p">(</span><span class="n">controls</span><span class="p">)</span>
 </code></pre></div></li>
 </ol>
 <h3 id="note_1">Note</h3>
@@ -605,16 +605,14 @@ Now, to visit any of your views, just use the method view_go:
 <li>The wadd method adds those controls to the current working view. By default, this is the last view you declared. Though similar to append, wadd is intended to be less verbose and cleaner.</li>
 <li>Both methods call page.update() so you don't have to use it in your code.</li>
 </ul>
-<p>If you want to change the working view (for all future 'wadd' calls) use:
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">fv</span><span class="o">.</span><span class="n">set_working</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">)</span>
-</code></pre></div></p>
+<p>If you want to change the working view (for all future 'wadd' calls) use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">set_working</span><span class="p">(</span><span class="s2">&quot;view_name&quot;</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="going-back">Going back</h2>
 <p>To go back use the 'go_back' method:</p>
-<div class="highlight"><pre><span></span><code>```python
-fv.go_back()
-```
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">go_back</span><span class="p">()</span>
 </code></pre></div>
-<p>FleetingViews considers possible routes a user might take, ensuring they won't get stuck in a loop. Once there's no more back history, the back actions return users to the root page.</p>
+FleetingViews considers possible routes a user might take, ensuring they won't get stuck in a loop. Once there's no more back history, the back actions return users to the root page.</p>
 <p>Additionally, the 'clean' methods erases all history, that means the next 'go_back' call will return the root page.</p>
 <h2 id="basic-fleetingviews-design">Basic FleetingViews design</h2>
 <p><img alt="Routing image" src="../routing.png" /></p>
