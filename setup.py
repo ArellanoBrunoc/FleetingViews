@@ -21,6 +21,6 @@ setup(
     url="https://github.com/ArellanoBrunoc/FleetingViews",
     include_package_data=True,
     install_requires=[
-        "flet",
+        "flet","time"
     ],
 )

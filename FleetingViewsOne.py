@@ -1,4 +1,8 @@
 import flet as ft
+import time
+
+
+
 
 
 class FleetingViews:
@@ -26,45 +30,51 @@ class FleetingViews:
         self.working_view = views[last_view]
 
 
-    def view_go(self, view_name:str, back: bool = False):
+    def view_go(self, view_name:str, back: bool = False, duration: int = 0, mode:str="top_left",):
         """
         Changes the current displayed view.
 
         Args:
             view_name (str): The name of the view to display.
+            back (bool): If the view_go call is intended for a back call.
+            duration (int): The time for the animation in milliseconds
 
         Raises:
             ValueError: If the view name is not in the views dictionary.
         """
         view_name = view_name.lower()
         if view_name in self.views.keys():
+            if self.actual_view == self.views[view_name]:
+                return
+            if duration > 0:
+                self.animation(duration, next_view_name=view_name, mode=mode)
             view_index = self.page.views.index(self.views[view_name])
+
             self.page.views.pop(view_index)
             self.page.views.append(self.views[view_name])
-            if self.actual_view != self.views[view_name] and self.actual_view.route not in self.prev_views and not back:
-                self.prev_views.append(self.actual_view.route)
-            elif self.actual_view != self.views[view_name] and self.actual_view.route in self.prev_views and not back:
-                del_index = self.prev_views.index(self.actual_view.route)
-                self.prev_views.pop(del_index)
-                self.prev_views.append(self.actual_view.route)
-            elif back:
-                self.prev_views.pop()
 
+            if back:
+                self.prev_views.pop()
+            else:
+                if self.actual_view.route in self.prev_views:
+                    self.prev_views.remove(self.actual_view.route)
+                self.prev_views.append(self.actual_view.route)
             self.actual_view = self.views[view_name]
             self.page.update()
         else:
             raise ValueError(f"{view_name} is not a view of this FleetingViews")
-    def go_back(self):
+        
+    def go_back(self, duration:int = 0, mode:str="top_left"):
 
         """
         Changes the current displayed view to one in the past
 
         """
         if len(self.prev_views) > 0:
-            self.view_go(self.prev_views[-1], True)
+            self.view_go(self.prev_views[-1], back=True, duration=duration, mode=mode)
         else:
             first_view = next(iter(self.views))
-            self.view_go(first_view)
+            self.view_go(first_view, duration=duration, mode=mode)
             self.prev_views =[]
         
     def clear(self):
@@ -73,7 +83,7 @@ class FleetingViews:
         """
         self.prev_views = [];
     
-    def append(self, view_name, controls):
+    def append(self, view_name:str, controls, update:bool = True):
         """
         Adds a control or a list of controls to a specific view. 
         If the working view is the same as the argument, behaves like the wadd method.
@@ -92,11 +102,13 @@ class FleetingViews:
                     self.views[view_name].controls.append(control)
             else:
                 self.views[view_name].controls.append(controls)
-            self.page.update()
+            if update: 
+                self.page.update()
+
         else:
             raise ValueError(f"{view_name} is not a view of this FleetingViews")
         
-    def wadd(self, controls):
+    def wadd(self, controls, update:bool=True):
         """
         Adds a control or a list of controls to the working view. 
 
@@ -112,9 +124,19 @@ class FleetingViews:
                 self.working_view.controls.append(control)
         else:
             self.working_view.controls.append(controls)
-        self.page.update()
+        if update:
+            self.page.update()
         
     def set_working(self, view_name):
+        """
+        Sets the working view for wadd calls.
+
+        Args:
+            view_name (str): The name of the view to set as working.
+
+        Raises:
+            ValueError: If the view name is not in the views dictionary or if the name is not an str.
+        """
         view_name = view_name.lower()
         if isinstance(view_name, str):
             if view_name in self.views.keys():
@@ -125,6 +147,67 @@ class FleetingViews:
             raise ValueError(f"{view_name} is not a string")
         self.page.update()
 
+    def animation(self, duration, next_view_name, mode:str="top_left"):
+        """
+        Creates an animation for the chaning view action
+
+        Args:
+            duration (int): The duration in miliseconds of the transition.
+            next_view_name (str): The name of the traveling to view.
+            mode (str): The animation mode for the view transition.
+
+        Raises:
+            ValueError: If the animation mode is not a valid key in the animation dict.
+        """
+        animation_modes = {"left":[0,-self.page.window.width],
+                   "bottom": [self.page.window.height,0],
+                   "top":[-self.page.window.height,0],
+                   "right": [0,self.page.window.width],
+                    "bottom_right": [self.page.window.height, self.page.window.width],
+                    "bottom_left": [self.page.window.height, -self.page.window.width],
+                    "top_right": [-self.page.window.height, self.page.window.width],
+                    "top_left": [-self.page.window.height, -self.page.window.width],
+                   }
+        original_controls = self.actual_view.controls
+        original_padding =  self.actual_view.padding
+    
+        if not mode in animation_modes.keys():
+            raise ValueError(f"{mode} is not a valid animation mode of FleetingViews")
+
+
+        #Animation container
+        envelop = ft.Stack(
+                    width=self.page.window.width,
+                    height=self.page.window.height,
+                    controls=[ft.Container( 
+                                    width=self.page.window.width,
+                                    height=self.page.window.height,
+                                    bgcolor=self.views[next_view_name].bgcolor,
+                                    margin=0,
+                                    animate_position=ft.animation.Animation(duration-10, ft.animation.AnimationCurve.LINEAR_TO_EASE_OUT),
+                                    top=animation_modes[mode][0],
+                                    left=animation_modes[mode][1]
+                                    
+                                    )],
+                    )
+        
+        #Setting of the temporal phasing view
+        self.actual_view.padding = 0
+        self.actual_view.controls = [envelop]
+        self.page.update()
+        time.sleep(0.01)
+        envelop.controls[0].left = 0
+        envelop.controls[0].top = 0
+        self.page.update()
+        time.sleep(duration/1000)
+        
+        #Restorationg of initial values
+        self.actual_view.padding = original_padding
+        self.actual_view.controls = original_controls
+
+
+                    
+                    
 
 def initialize_view(view:ft.View, page: ft.Page):
     page.views.append(view)
