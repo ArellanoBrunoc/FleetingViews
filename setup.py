@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="fleetingviews",
-    version="1.0.0",
+    version="a0.1.2",
     author="Bruno Arellano",
     author_email="arellanobruno@hotmail.com",
     py_modules=['FleetingViews'],
@@ -21,6 +21,6 @@ setup(
     url="https://github.com/ArellanoBrunoc/FleetingViews",
     include_package_data=True,
     install_requires=[
-        "flet","time"
+        "flet"
     ],
 )
