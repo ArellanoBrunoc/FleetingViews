@@ -1,5 +1,5 @@
 import flet as ft
-import FleetingViewsOne as fv
+import FleetingViews as fv
 import time
 
 def main(page: ft.Page):
