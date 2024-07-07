@@ -542,8 +542,8 @@
 
 <h1 id="animations">Animations</h1>
 <h2 id="v011">V0.1.1</h2>
-<p>This version of LfeetingViews now enables view transitions with customizable position and duration for every 'view_go' and "go_back" calls.</p>
-<p>For example, let's initialize some views in our project</p>
+<p>This version of FleetingViews now enables view transitions with customizable position and duration for every 'view_go' and "go_back" call.</p>
+<p>For example, let's initialize some views in our project:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    <span class="c1"># View definitions with specific configurations</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">view_definitions</span> <span class="o">=</span> <span class="p">{</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>            <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -559,12 +559,12 @@
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">fv</span> <span class="o">=</span> <span class="n">fleetingviews</span><span class="o">.</span><span class="n">create_views</span><span class="p">(</span><span class="n">view_definitions</span><span class="o">=</span><span class="n">view_definitions</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a> <span class="err">```</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">Now</span><span class="p">,</span> <span class="nb">all</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">left</span> <span class="ow">is</span> <span class="n">to</span> <span class="n">call</span> <span class="n">one</span> <span class="n">of</span> <span class="n">the</span> <span class="n">said</span> <span class="n">methods</span> <span class="k">as</span> <span class="n">follows</span><span class="p">:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">Now</span><span class="p">,</span> <span class="nb">all</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">left</span> <span class="ow">is</span> <span class="n">to</span> <span class="n">call</span> <span class="n">one</span> <span class="n">of</span> <span class="n">the</span> <span class="n">methods</span> <span class="k">as</span> <span class="n">follows</span><span class="p">:</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="err">```</span><span class="n">python</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">fv</span><span class="o">.</span><span class="n">view_go</span><span class="p">(</span><span class="s2">&quot;projects&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 </code></pre></div>
-<p>By adding the duration parameter with a value above 0, FleetingView will know that the call is intended to have an animation that lasts 'duration' miliseconds.</p>
+<p>By adding the duration parameter with a value above 0, FleetingViews will know that the call is intended to have an animation that lasts <code>duration</code> milliseconds.</p>
 <p>You can also declare the animation mode that you prefer from the options below:</p>
 <h2 id="1-top_left-default">1. top_left (default)</h2>
 <h2 id="2-top">2. top</h2>
