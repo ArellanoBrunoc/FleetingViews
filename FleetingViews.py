@@ -185,7 +185,6 @@ class FleetingViews:
         if not mode in animation_modes.keys():
             raise ValueError(f"{mode} is not a valid animation mode of FleetingViews")
 
-        print(self.views[next_view_name].padding)
         #Animation container
         envelop = ft.Stack(
                     width=self.page.window.width,
