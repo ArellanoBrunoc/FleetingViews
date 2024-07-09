@@ -316,5 +316,8 @@ def create_views(view_definitions: dict, page: ft.Page):
         initialize_view(views_dict[view_name.lower()], page)
 
     fv = FleetingViews(page, views_dict)
+    first_view = next(iter(fv.views))
+    fv.view_go(first_view)
+    fv.prev_views = []
     return fv
 
