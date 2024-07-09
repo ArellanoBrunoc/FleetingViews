@@ -32,30 +32,33 @@ def main(page: ft.Page):
         number_of_times = int(text.split(" ")[-2])
         number_of_times += 1
         fleetingViews.views[view].controls[0].content.value = f"IM THE TEXT OF PAGE {view} {number_of_times} times"
-        fleetingViews.view_go(view, duration=0, mode="right")
+        fleetingViews.view_go(view, duration=200, mode="top_left")
 
 
 
     # Set up content and buttons for the views
     fleetingViews.append("home", ft.Container(
-        width=page.width,
-        height=page.height/2,
+
         content=ft.Text("IM THE TEXT OF PAGE HOME 0 times", size=40),
-        alignment=ft.alignment.center
+     
+        alignment=ft.alignment.center,
+                expand=1
     ))
 
     fleetingViews.append("projects", ft.Container(
-        width=page.width,
-        height=page.height/2,
+
         content=ft.Text("IM THE TEXT OF PAGE PROJECTS 0 times", size=40),
-        alignment=ft.alignment.center
+
+        alignment=ft.alignment.center,
+        expand=1
     ))
 
     fleetingViews.append("settings", ft.Container(
-        width=page.width,
-        height=page.height/2,
+
         content=ft.Text("IM THE TEXT OF SETTINGS HOME 0 times", size=40),
-        alignment=ft.alignment.center
+   
+        alignment=ft.alignment.center,
+                expand=1
     ))
 
     # Buttons with actions

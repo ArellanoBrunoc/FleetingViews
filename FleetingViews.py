@@ -28,9 +28,10 @@ class FleetingViews:
         self.actual_view = views[last_view]
         self.prev_views = []
         self.working_view = views[last_view]
+        self.is_executing = False  # Semaphore to control the execution of view_go and go_back()
 
 
-    def view_go(self, view_name:str, back: bool = False, duration: int = 0, mode:str="top_left",):
+    def view_go(self, view_name: str, back: bool = False, duration: int = 0, mode: str = "top_left"):
         """
         Changes the current displayed view.
 
@@ -42,27 +43,34 @@ class FleetingViews:
         Raises:
             ValueError: If the view name is not in the views dictionary.
         """
-        view_name = view_name.lower()
-        if view_name in self.views.keys():
-            if self.actual_view == self.views[view_name]:
-                return
-            if duration > 0:
-                self.animation(duration, next_view_name=view_name, mode=mode)
-            view_index = self.page.views.index(self.views[view_name])
+        if self.is_executing:
+            return
+        self.is_executing = True
 
-            self.page.views.pop(view_index)
-            self.page.views.append(self.views[view_name])
+        try:
+            view_name = view_name.lower()
+            if view_name in self.views.keys():
+                if self.actual_view == self.views[view_name]:
+                    return
+                if duration > 0:
+                    self.animation(duration, next_view_name=view_name, mode=mode)
+                view_index = self.page.views.index(self.views[view_name])
 
-            if back:
-                self.prev_views.pop()
+                self.page.views.pop(view_index)
+                self.page.views.append(self.views[view_name])
+
+                if back:
+                    self.prev_views.pop()
+                else:
+                    if self.actual_view.route in self.prev_views:
+                        self.prev_views.remove(self.actual_view.route)
+                    self.prev_views.append(self.actual_view.route)
+                self.actual_view = self.views[view_name]
+                self.page.update()
             else:
-                if self.actual_view.route in self.prev_views:
-                    self.prev_views.remove(self.actual_view.route)
-                self.prev_views.append(self.actual_view.route)
-            self.actual_view = self.views[view_name]
-            self.page.update()
-        else:
-            raise ValueError(f"{view_name} is not a view of this FleetingViews")
+                raise ValueError(f"{view_name} is not a view of this FleetingViews")
+        finally:
+            self.is_executing = False
         
     def go_back(self, duration:int = 0, mode:str="top_left"):
 
@@ -70,6 +78,8 @@ class FleetingViews:
         Changes the current displayed view to one in the past
 
         """
+        if self.is_executing:
+            return
         if len(self.prev_views) > 0:
             self.view_go(self.prev_views[-1], back=True, duration=duration, mode=mode)
         else:
@@ -169,24 +179,36 @@ class FleetingViews:
                     "top_left": [-self.page.window.height, -self.page.window.width],
                    }
         original_controls = self.actual_view.controls
+        original_controls_next = self.views[next_view_name].controls
         original_padding =  self.actual_view.padding
-    
+        self.views[next_view_name].controls = []
         if not mode in animation_modes.keys():
             raise ValueError(f"{mode} is not a valid animation mode of FleetingViews")
 
-
+        print(self.views[next_view_name].padding)
         #Animation container
         envelop = ft.Stack(
                     width=self.page.window.width,
                     height=self.page.window.height,
                     controls=[ft.Container( 
+                                    content=(ft.Column(
+                                                    controls=original_controls_next,
+                                                    alignment=self.views[next_view_name].vertical_alignment,
+                                                    horizontal_alignment=self.views[next_view_name].horizontal_alignment,
+                                                    spacing=self.views[next_view_name].spacing,
+                                                    height=self.page.window.height-self.views[next_view_name].padding.top-self.views[next_view_name].padding.bottom,
+                                                    width=self.page.window.width-self.views[next_view_name].padding.right-self.views[next_view_name].padding.left,
+
+                                    )),
                                     width=self.page.window.width,
-                                    height=self.page.window.height,
+                                    height=self.page.window.height-self.views[next_view_name].padding.top-self.views[next_view_name].padding.bottom,
                                     bgcolor=self.views[next_view_name].bgcolor,
                                     margin=0,
-                                    animate_position=ft.animation.Animation(duration-10, ft.animation.AnimationCurve.LINEAR_TO_EASE_OUT),
+                                    animate_position=ft.animation.Animation(duration-10, ft.animation.AnimationCurve.LINEAR),
                                     top=animation_modes[mode][0],
-                                    left=animation_modes[mode][1]
+                                    left=animation_modes[mode][1],
+                                    alignment=ft.alignment.center,
+                                    padding=self.views[next_view_name].padding
                                     
                                     )],
                     )
@@ -195,15 +217,21 @@ class FleetingViews:
         self.actual_view.padding = 0
         self.actual_view.controls = [envelop]
         self.page.update()
-        time.sleep(0.01)
-        envelop.controls[0].left = 0
-        envelop.controls[0].top = 0
+        time.sleep(0.05)
+        envelop.controls[0].left = -self.views[next_view_name].padding.left
+        envelop.controls[0].top = -self.views[next_view_name].padding.top - self.views[next_view_name].padding.bottom
         self.page.update()
         time.sleep(duration/1000)
-        
+        self.actual_view.controls = []
+        self.views[next_view_name].controls = []
+
+        for control in original_controls_next:
+            self.views[next_view_name].controls.append(control)
+
         #Restorationg of initial values
         self.actual_view.padding = original_padding
         self.actual_view.controls = original_controls
+
 
 
                     
