@@ -4,22 +4,45 @@ import time
 
 def main(page: ft.Page):
     page.padding = ft.padding.all(0)
+    home_drawer = ft.NavigationDrawer(
+      controls=[
+          ft.Container(height=12),
+          ft.NavigationDrawerDestination(
+              label="IM THE HOME DRAWER",
+              icon=ft.icons.HOME,
+              selected_icon_content=ft.Icon(ft.icons.HOME_FILLED),
+          )
+      ]
+  )
+    settings_drawer = ft.NavigationDrawer(
+      controls=[
+          ft.Container(height=12),
+          ft.NavigationDrawerDestination(
+              label="IM THE SETTINGS DRAWER",
+              icon=ft.icons.HOME,
+              selected_icon_content=ft.Icon(ft.icons.HOME_FILLED),
+          )
+      ]
+  )
     # View definitions with specific configurations
     view_definitions = {
         'home': {
             'bgcolor': ft.colors.BLUE_GREY,
             'vertical_alignment': ft.MainAxisAlignment.CENTER,
-            'horizontal_alignment': ft.CrossAxisAlignment.CENTER
+            'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
+            "drawer":home_drawer
         },
         'settings': {
             'bgcolor': ft.colors.AMBER_900,
             'vertical_alignment': ft.MainAxisAlignment.CENTER,
-            'horizontal_alignment': ft.CrossAxisAlignment.CENTER
+            'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
+                        "drawer":settings_drawer
         },
         'projects': {
             'bgcolor': ft.colors.RED_900,
             'vertical_alignment': ft.MainAxisAlignment.CENTER,
-            'horizontal_alignment': ft.CrossAxisAlignment.CENTER
+            'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
+
         }
     }
 
@@ -72,8 +95,11 @@ def main(page: ft.Page):
     to_settings_2 = ft.ElevatedButton("Settings", on_click=lambda _: counter("settings"))
     back_3 = ft.ElevatedButton("BACK!", on_click=lambda _: fleetingViews.go_back())
 
+
+    drawer_button = ft.ElevatedButton("OPENDRAWER", on_click=lambda e: page.open(fleetingViews.actual_view.drawer))
+
     # Append buttons to views
-    fleetingViews.append("home", [to_settings, to_projects, back])
+    fleetingViews.append("home", [to_settings, to_projects, back, drawer_button])
     fleetingViews.append("projects", [to_home, to_settings_2, back_2])
     fleetingViews.append("settings", [to_home_2, to_projects_2, back_3])
 

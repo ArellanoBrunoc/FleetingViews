@@ -1,6 +1,6 @@
 import flet as ft
 import time
-
+import json
 
 
 
@@ -29,48 +29,57 @@ class FleetingViews:
         self.prev_views = []
         self.working_view = views[last_view]
         self.is_executing = False  # Semaphore to control the execution of view_go and go_back()
+        self.shared_data = {}
 
+    def save_data_to_json(self, path="shared_data.json"):
+        """
+        saves shared states in a json
+        """
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(self.shared_data, f, ensure_ascii=False, indent=4)
+
+    def load_data_from_json(self, path="shared_data.json"):
+        """
+        saves shared states of an specific data.
+        """
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                self.shared_data = json.load(f)
+        except FileNotFoundError:
+            self.shared_data = {}
 
     def view_go(self, view_name: str, back: bool = False, duration: int = 0, mode: str = "top_left"):
-        """
-        Changes the current displayed view.
-
-        Args:
-            view_name (str): The name of the view to display.
-            back (bool): If the view_go call is intended for a back call.
-            duration (int): The time for the animation in milliseconds
-
-        Raises:
-            ValueError: If the view name is not in the views dictionary.
-        """
         if self.is_executing:
             return
         self.is_executing = True
 
         try:
             view_name = view_name.lower()
-            if view_name in self.views.keys():
+            if view_name in self.views:
                 if self.actual_view == self.views[view_name]:
                     return
+
                 if duration > 0:
                     self.animation(duration, next_view_name=view_name, mode=mode)
-                view_index = self.page.views.index(self.views[view_name])
 
+                view_index = self.page.views.index(self.views[view_name])
                 self.page.views.pop(view_index)
                 self.page.views.append(self.views[view_name])
-
+                
                 if back:
                     self.prev_views.pop()
                 else:
                     if self.actual_view.route in self.prev_views:
                         self.prev_views.remove(self.actual_view.route)
                     self.prev_views.append(self.actual_view.route)
+
                 self.actual_view = self.views[view_name]
                 self.page.update()
             else:
                 raise ValueError(f"{view_name} is not a view of this FleetingViews")
         finally:
             self.is_executing = False
+
         
     def go_back(self, duration:int = 0, mode:str="top_left"):
 
@@ -232,6 +241,88 @@ class FleetingViews:
         self.actual_view.controls = original_controls
 
 
+    def open_drawer(self, drawer, position: str = "start"):
+        """
+        Opens the specified drawer on the given position ('start' or 'end') of the current view.
+
+        Args:
+            drawer: The drawer component (start or end) to open.
+            position (str): Position of the drawer ('start' or 'end').
+
+        Raises:
+            ValueError: If the provided position is invalid.
+        """
+        if position == "start":
+            if self.actual_view.drawer is None or self.actual_view.drawer != drawer:
+                self.actual_view.drawer = drawer
+
+            drawer.open = True
+            self.page.update()
+
+        elif position == "end":
+            if self.actual_view.end_drawer is None or self.actual_view.end_drawer != drawer:
+                self.actual_view.end_drawer = drawer
+
+            drawer.open = True
+            self.page.update()
+        else:
+            raise ValueError("Drawer position must be 'start' or 'end'.")
+
+    def close_drawer(self, drawer, position: str = "start"):
+        """
+        Closes the specified drawer on the given position ('start' or 'end') of the current view.
+
+        Args:
+            drawer: The drawer component (start or end) to close.
+            position (str): Position of the drawer ('start' or 'end').
+
+        Raises:
+            ValueError: If the provided position is invalid.
+        """
+        if position == "start":
+            if self.actual_view.drawer is None or self.actual_view.drawer != drawer:
+                self.actual_view.drawer = drawer
+
+            drawer.open = False
+            self.page.update()
+
+        elif position == "end":
+            if self.actual_view.end_drawer is None or self.actual_view.end_drawer != drawer:
+                self.actual_view.end_drawer = drawer
+
+            drawer.open = False
+            self.page.update()
+        else:
+            raise ValueError("Drawer position must be 'start' or 'end'.")
+
+    def toggle_drawer(self, drawer, position: str = "start"):
+        """
+        Toggles the state of the specified drawer (open if closed, closed if open) on the given position ('start' or 'end') of the current view.
+
+        Args:
+            drawer: The drawer component (start or end) to toggle.
+            position (str): Position of the drawer ('start' or 'end').
+
+        Raises:
+            ValueError: If the provided position is invalid.
+        """
+        if position == "start":
+            if self.actual_view.drawer is None or self.actual_view.drawer != drawer:
+                self.actual_view.drawer = drawer
+
+            # Toggle drawer state
+            drawer.open = not drawer.open
+            self.page.update()
+
+        elif position == "end":
+            if self.actual_view.end_drawer is None or self.actual_view.end_drawer != drawer:
+                self.actual_view.end_drawer = drawer
+
+            # Toggle drawer state
+            drawer.open = not drawer.open
+            self.page.update()
+        else:
+            raise ValueError("Drawer position must be 'start' or 'end'.")
 
                     
                     
