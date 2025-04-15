@@ -1,7 +1,7 @@
 import flet as ft
 import time
 import json
-
+import urllib
 
 
 
@@ -29,7 +29,10 @@ class FleetingViews:
         self.prev_views = []
         self.working_view = views[last_view]
         self.is_executing = False  # Semaphore to control the execution of view_go and go_back()
+        
         self.shared_data = {}
+        
+        self.on_view_change = None
 
     def save_data_to_json(self, path="shared_data.json"):
         """
@@ -48,37 +51,71 @@ class FleetingViews:
         except FileNotFoundError:
             self.shared_data = {}
 
+    def get_param(self, key, default=None):
+        """
+        Returns the value of a query parameter or default if not found.
+        """
+        return self._query_params.get(key, default)
+
+    def get_params(self):
+        """
+        Returns the full dictionary of current query parameters.
+        """
+        return self._query_params.copy()
+
     def view_go(self, view_name: str, back: bool = False, duration: int = 0, mode: str = "top_left"):
         if self.is_executing:
             return
         self.is_executing = True
 
         try:
-            view_name = view_name.lower()
-            if view_name in self.views:
-                if self.actual_view == self.views[view_name]:
+            # ✳️ Separar nombre y parámetros tipo query string
+            if '?' in view_name:
+                name, query = view_name.split('?', 1)
+                self._query_params = dict(urllib.parse.parse_qsl(query))
+            else:
+                name = view_name
+                self._query_params = {}
+
+            name = name.lower()
+
+            if name in self.views:
+                next_view = self.views[name]
+
+                if self.actual_view == next_view:
                     return
 
                 if duration > 0:
-                    self.animation(duration, next_view_name=view_name, mode=mode)
+                    self.animation(duration, next_view_name=name, mode=mode)
 
-                view_index = self.page.views.index(self.views[view_name])
-                self.page.views.pop(view_index)
-                self.page.views.append(self.views[view_name])
-                
+                try:
+                    view_index = self.page.views.index(next_view)
+                    self.page.views.pop(view_index)
+                except ValueError:
+
+                    pass
+
+                self.page.views.append(next_view)
+
                 if back:
-                    self.prev_views.pop()
+                    if self.prev_views:
+                        self.prev_views.pop()
                 else:
-                    if self.actual_view.route in self.prev_views:
+                    if self.actual_view and self.actual_view.route in self.prev_views:
                         self.prev_views.remove(self.actual_view.route)
-                    self.prev_views.append(self.actual_view.route)
+                    if self.actual_view:
+                        self.prev_views.append(self.actual_view.route)
 
-                self.actual_view = self.views[view_name]
+                self.actual_view = next_view
                 self.page.update()
+                
+                if callable(self.on_view_change):
+                    self.on_view_change(name, self._query_params)
             else:
-                raise ValueError(f"{view_name} is not a view of this FleetingViews")
+                raise ValueError(f"{name} is not a view of this FleetingViews")
         finally:
             self.is_executing = False
+
 
         
     def go_back(self, duration:int = 0, mode:str="top_left"):
