@@ -24,6 +24,7 @@ nav:
   - Hooks and Guards: Hooks_and_guards.md
   - Query Parameters: query_strings.md
   - Animations: animations.md 
+  - 404_handler: 404_page.md
 
 
 
