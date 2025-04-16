@@ -180,47 +180,35 @@ class FleetingViews:
         Adds additional hooks or guards to the existing view.
 
         Parameters:
-        view_name (str): The name of the view to which hooks or guards should be added.
-        hooks_or_guards (dict): A dictionary containing the hooks or guards to be added. 
-                                Keys should be 'on_mount', 'on_dismount', or 'guards'.
-                                Values should be a single function or a list of functions.
+            view_name (str): The name of the view to which hooks or guards should be added.
+            hooks_or_guards (dict): A dictionary containing the hooks or guards to be added. 
+                                    Keys can be 'on_mount', 'on_dismount', or 'guards'.
+                                    Values can be a single function or a list of functions.
         """
-        # Get the view object
         view = self.views.get(view_name.lower())
         if not view:
             raise ValueError(f"View '{view_name}' not found.")
 
-        # Add or merge hooks (on_mount, on_dismount)
-        if 'on_mount' in hooks_or_guards:
-            on_mount = hooks_or_guards['on_mount']
-            existing_on_mount = getattr(self.views[view_name], "__on_mount__", [])
-            if isinstance(existing_on_mount, list):
-                existing_on_mount.extend(on_mount if isinstance(on_mount, list) else [on_mount])
-            else:
-                existing_on_mount = [existing_on_mount] if callable(existing_on_mount) else []
-                existing_on_mount.append(on_mount if callable(on_mount) else [on_mount])
-            setattr(view, "__on_mount__", existing_on_mount)
+        def _extend_attr(attr_name: str, new_funcs):
+            existing = getattr(view, attr_name, [])
+            if not isinstance(existing, list):
+                existing = [existing] if callable(existing) else []
+            if not isinstance(new_funcs, list):
+                new_funcs = [new_funcs]
+            existing.extend(new_funcs)
+            setattr(view, attr_name, existing)
 
-        if 'on_dismount' in hooks_or_guards:
-            on_dismount = hooks_or_guards['on_dismount']
-            existing_on_dismount = getattr(self.views[view_name], "__on_dismount__", [])
-            if isinstance(existing_on_dismount, list):
-                existing_on_dismount.extend(on_dismount if isinstance(on_dismount, list) else [on_dismount])
-            else:
-                existing_on_dismount = [existing_on_dismount] if callable(existing_on_dismount) else []
-                existing_on_dismount.append(on_dismount if callable(on_dismount) else [on_dismount])
-            setattr(view, "__on_dismount__", existing_on_dismount)
+        valid_keys = {
+            "on_mount": "__on_mount__",
+            "on_dismount": "__on_dismount__",
+            "guards": "__guards__"
+        }
 
-        # Add or merge guards
-        if 'guards' in hooks_or_guards:
-            guards = hooks_or_guards['guards']
-            existing_guards = getattr(self.views[view_name], "__guards__", [])
-            if isinstance(existing_guards, list):
-                existing_guards.extend(guards if isinstance(guards, list) else [guards])
-            else:
-                existing_guards = [existing_guards] if callable(existing_guards) else []
-                existing_guards.append(guards if callable(guards) else [guards])
-            setattr(view, "__guards__", existing_guards)
+        for key, funcs in hooks_or_guards.items():
+            if key not in valid_keys:
+                raise ValueError(f"Invalid hook/guard key: '{key}'. Must be one of {list(valid_keys.keys())}.")
+            _extend_attr(valid_keys[key], funcs)
+
 
 
     
@@ -753,12 +741,13 @@ def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = Tru
 
             
     fv = FleetingViews(page, views_dict)
-    
-    if fallback_404:
-        button_back.on_click = lambda e: fv.go_back()
-    
     first_view = next(iter(fv.views))
     fv.view_go(first_view)
+    
+    if fallback_404:
+        button_back.on_click = lambda e: fv.view_go(first_view)
+    
+
     fv.prev_views = []
     return fv
 

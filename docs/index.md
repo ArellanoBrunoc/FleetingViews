@@ -1,20 +1,43 @@
-![Build Status](logo.png)
-# Welcome to FleetingViews
+![FleetingViews Logo](logo.png)
 
-FleetingViews is a utility class designed for managing views within Flet applications. It simplifies the process of creating, navigating, and customizing views, similar to how web frameworks manage routes. FleetingViews allows you to define views with specific configurations, keep track of navigation history, and dynamically update view content.
+# Welcome to FleetingViews 👋
 
-## Installation
-```
+**FleetingViews** is a lightweight but powerful utility class that simplifies **view management** in [Flet](https://flet.dev) applications.  
+Inspired by modern frontend routing systems, FleetingViews provides tools to **create, switch, animate, and control** views with ease—no boilerplate, no fuss.
+
+---
+
+## ✨ Features (v0.1.8)
+
+- 🚀 Easy view declaration and dynamic navigation
+- 🧭 Built-in navigation history with `go_back()`
+- 🧱 Add controls dynamically from views
+- 🎭 Animated transitions between views
+- 🧩 Lifecycle hooks (`on_mount`, `on_dismount`, `on_view_change`)
+- 🛡️ Guard functions to protect certain views
+- 🧃 Support for drawers, FABs, AppBars.
+- 🧩 Easy to modularize view definitions and logic
+- 🌐 Easily pass and handle query parameters in views with FleetingViews
+- 🔄 Seamlessly share data across views and components with FleetingViews
+
+---
+
+## 📦 Installation
+
+```bash
 pip install fleetingviews
 ```
+## ❓ Why FleetingViews?
 
-## Upgradation
-```
-pip install fleetingviews --upgrade
-```
+Managing multiple views in a Flet app can quickly get messy.  
+**FleetingViews** helps you:
 
-## Why FleetingViews?
+- 🧹 Organize your views declaratively
+- 🔄 Handle transitions and user navigation easily
+- 🧠 Inject custom behavior with guards and hooks
+- 🧑‍💻 Focus on your app logic, not view plumbing
 
-FleetingViews was developed to provide a simple solution for managing views in Flet applications. By defining only the views you need and customizing them as required, you can quickly set up and manage your application's user interface.
+> “With FleetingViews, you think about *what* your app does not *how* to juggle UI blocks.”
+
 
 #### [Repository](https://github.com/ArellanoBrunoc/FleetingViews)

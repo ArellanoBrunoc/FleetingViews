@@ -20,8 +20,12 @@ theme:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
-  - Animations: animations.md 
   - Features: features.md
+  - Hooks and Guards: Hooks_and_guards.md
+  - Query Parameters: query_strings.md
+  - Animations: animations.md 
+
+
 
 
 markdown_extensions:

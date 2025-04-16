@@ -25,7 +25,9 @@ For example, let's initialize some views in our project:
 Now, all that is left is to call one of the methods as follows:
 
 ```python
-    fv.view_go("projects", duration=300)
+# Navigate to the "projects" view with a 300ms animation from the right
+fv.view_go("projects", duration=300, mode="right")
+
 ```
 
 By adding the duration parameter with a value above 0, FleetingViews will know that the call is intended to have an animation that lasts `duration` milliseconds.

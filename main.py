@@ -8,11 +8,14 @@ def main(page: ft.Page):
     
     page.padding = ft.padding.all(0)
 
- 
-
+    def my_on_mount_hook_dos(ctx):
+        print(f"hola {ctx.actual_view.route} dos" )
+    
+    def my_on_mount_hook_tres(ctx):
+        print(f"hola {ctx.actual_view.route} tres")
         
     appbar = ft.AppBar(
-                        leading= ft.IconButton(icon=ft.Icons.ARROW_BACK_IOS, on_click=lambda e: fv.go_back()),
+                        leading= ft.IconButton(icon=ft.Icons.ARROW_BACK_IOS, on_click=lambda e: fv.add_hooks_or_guards("home", {"on_mount": my_on_mount_hook_dos})),
                         actions=[
                                 ft.IconButton(icon=ft.Icons.HOME, on_click=lambda e: fv.view_go("home?id=23")),
                                 ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e:fv.view_go("settings?id=24&login_key=hello_world")),
@@ -21,7 +24,9 @@ def main(page: ft.Page):
                                 
 
                                 ])
-
+    def my_on_mount_hook(ctx, name):
+        print(f"hola {ctx.get_params()}")
+        return True
     # View definitions with specific configurations
     view_definitions = {
         'home': {
@@ -29,6 +34,7 @@ def main(page: ft.Page):
             'vertical_alignment': ft.MainAxisAlignment.CENTER,
             'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
             "appbar": appbar,
+            "guards": my_on_mount_hook
         },
         'settings': {
             'bgcolor': ft.Colors.AMBER_900,
@@ -56,8 +62,10 @@ def main(page: ft.Page):
     # Create instances of FleetingViews and configure views and controls
     fv = fleetingViews.create_views(view_definitions=view_definitions, page=page)
     
+    def my_hook(name, params):
+        print(params, name)
 
-
+    fv.on_view_change = my_hook
     button_home = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!",on_click=lambda e: fv.update_view("home", {"bgcolor":  ft.Colors.RED,'horizontal_alignment': ft.CrossAxisAlignment.START }))
 
     button_settings = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!", on_click=lambda e: print(fv.get_params()))
