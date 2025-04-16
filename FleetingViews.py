@@ -308,6 +308,7 @@ class FleetingViews:
             name = name.lower()
             
             if not self._run_guards(name):
+                self.is_executing = False
                 return
             
             if name in self.views:
