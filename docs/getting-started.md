@@ -16,36 +16,36 @@ pip install fleetingviews --upgrade
 ```python
 import FleetingViews as fleetingviews
 ```
-# Defining Your Views
+## Defining Your Views
 
 Start by defining your views using a simple dictionary structure. Each key is a view name, and its value is a dictionary of view-specific configurations.
 
 ```python
-    # View definitions with specific configurations
-    view_definitions = {
-        "home": {
-            "bgcolor": ft.colors.BLUE_GREY,
-            "vertical_alignment": ft.MainAxisAlignment.CENTER,
-            "horizontal_alignment": ft.CrossAxisAlignment.CENTER,
-        },
-        "settings": {
-            "bgcolor": ft.colors.AMBER_900,
-            "vertical_alignment": ft.MainAxisAlignment.CENTER,
-            "horizontal_alignment": ft.CrossAxisAlignment.CENTER,
-        },
-        "projects": {
-            "bgcolor": ft.colors.BLACK,
-            "vertical_alignment": ft.MainAxisAlignment.CENTER,
-            "horizontal_alignment": ft.CrossAxisAlignment.CENTER,
-        },
-    }
+# View definitions with specific configurations
+view_definitions = {
+    "home": {
+        "bgcolor": ft.colors.BLUE_GREY,
+        "vertical_alignment": ft.MainAxisAlignment.CENTER,
+        "horizontal_alignment": ft.CrossAxisAlignment.CENTER,
+    },
+    "settings": {
+        "bgcolor": ft.colors.AMBER_900,
+        "vertical_alignment": ft.MainAxisAlignment.CENTER,
+        "horizontal_alignment": ft.CrossAxisAlignment.CENTER,
+    },
+    "projects": {
+        "bgcolor": ft.colors.BLACK,
+        "vertical_alignment": ft.MainAxisAlignment.CENTER,
+        "horizontal_alignment": ft.CrossAxisAlignment.CENTER,
+    },
+}
 ```
 ### Notes
  * This is the most basic example. We'll cover more advanced definitions later on.
  * Any omitted argument will fall back to Flet’s default values.
  * You can declare views in any order, but the first one will be treated as the root view (i.e., the default entry point of your app).
 
-# Initializing FleetingViews
+## Initializing FleetingViews
 
 Once you’ve defined your views, create a FleetingViews object:
 ```python
@@ -63,7 +63,7 @@ For example:
 ```python
 fv.view_go("settings")
 ```
-### Notes:
+### Notes
 * You can set `history_debug=True` as an argument to either `view_go()` or `go_back()` to print the navigation flow and see exactly how the history is being handled in your app.
 ```python
 fv.view_go("settings", history_debug=True)
@@ -74,63 +74,54 @@ fv.go_back(history_debug=True)
 FleetingViews supports two convenient methods for adding controls:
 
 1. `append()`
-This method adds one or more controls to a specific view:
+    This method adds one or more controls to a specific view:
 
-```python
+    ```python
     fv.append("view_name", controls)
-```
-`controls` can be:
-* A single Flet control (e.g. `ft.Text("Hello")`)
-* A list of controls (e.g. `[ft.Text("Hello"), ft.ElevatedButton("Click")]`)
+    ```
+    `controls` can be:
+
+    * A single Flet control (e.g. `ft.Text("Hello")`)
+    * A list of controls (e.g. `[ft.Text("Hello"), ft.ElevatedButton("Click")]`)
 
 
 2. `wadd()`:
 
-A shorthand method to add controls to the currently active working view:
+    A shorthand method to add controls to the currently active working view:
 
 
 
-```python
+    ```python
     fv.wadd(controls)
-```
-This is ideal for building views in sequence without repeating the view name every time.
+    ```
+    This is ideal for building views in sequence without repeating the view name every time.
 
-If you want to change the working view (for all future `wadd()` calls) use:
+    If you want to change the working view (for all future `wadd()` calls) use:
 
-```python
+    ```python
     fv.set_working("view_name")
-```
-### Notes
-* By default, the working view is the *last declared view*.
-* Use `fv.set_working("view_name")` to change the active working view for future wadd() calls.
-* Both methods automatically trigger `page.update()`, so no need to call it manually (you can avoid this behaviour by setting `update=False` on the arguments!).
+    ```
+    ### Notes
+    * By default, the working view is the *last declared view*.
+    * Use `fv.set_working("view_name")` to change the active working view for future wadd() calls.
+    * Both methods automatically trigger `page.update()`, so no need to call it manually (you can avoid this behaviour by setting `update=False` on the arguments!).
 
 
 ## Going back
 To return to the previous view:
 
 ```python
-    fv.go_back()
+fv.go_back()
 ```
 FleetingViews maintains a history of visited views. Once there's no more history, calling `go_back()` will return you to the root view.
 
 If you want to reset *navigation history*, use:
 ```python
-    fv.clean()
+fv.clean()
 ```
 This clears the navigation stack. The next `go_back()` will always lead to the root view.
 ## Basic FleetingViews design
 Here’s a basic conceptual diagram of FleetingViews' routing system:
-
-[Root View]
-    ↓
-[View A] ← go_back()
-    ↓
-[View B] ← go_back()
-    ↓
-[View C] ← go_back()
-
-Or visually:
 
 ![Routing image](routing.png)
 

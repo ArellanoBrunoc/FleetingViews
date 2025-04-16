@@ -61,7 +61,7 @@ view_definitions = {
 }
 ```
 ### Notes:
-* It is advised that the hooks are given a context argument to get useful information in the manager ex: `ctx._query_params` will give you the parameter, you can also use `ctx.get_params()`.
+* It is advised that the hooks are given a context argument to get useful information in the manager ex: `ctx.get_param("param_name", default)` will give you the parameter, you can also use `ctx.get_params()`.
 * You can't create hooks that receive more than `ctx`.
 
 ## `on_view_change` Hook:
@@ -70,7 +70,8 @@ You can now define an `on_view_change` callback that gets executed **every time 
 This is useful for analytics, layout adjustments, logging, or global effects when the view changes.
 
 > ⚠️ For maintainability reasons, only **one** `on_view_change` handler is allowed. It should be a single callable function.
-> All guards must accept exactly two arguments: `view_name` and `params`
+
+> `on_view_change` must accept exactly two arguments: `view_name` and `params`
 
 Example:
 

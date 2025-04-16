@@ -117,7 +117,9 @@ By default, this will automatically redirect to the special "404_not_found" view
 
 This handler is *always* created unless explicitly disabled:
 ```python
- fv = fleetingViews.create_views(view_definitions=view_definitions, page=page, fallback_404=False)
+ fv = fleetingViews.create_views(view_definitions=view_definitions, 
+                                page=page, 
+                                fallback_404=False)
 ```
 
 Of course, you can fully customize the "404_not_found" page just like any other view:
@@ -135,8 +137,12 @@ view_definitions = {
         'bgcolor': ft.Colors.RED_300,
         'vertical_alignment': ft.MainAxisAlignment.CENTER,
         'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
-        "controls": [                ft.Text("Oops! This page doesn't exist (404)", size=30, weight="bold", color=ft.Colors.BLACK),
-            ft.Text("Please check the URL or go back to a known view.",color=ft.Colors.BLACK)],
+        "controls": [ft.Text("Oops! This page doesn't exist (404)", 
+                        size=30, 
+                        weight="bold", 
+                        color=ft.Colors.BLACK),
+            ft.Text("Please check the URL or go back to a known view.",
+                    color=ft.Colors.BLACK)],
         "appbar": appbar,
     },
 }
