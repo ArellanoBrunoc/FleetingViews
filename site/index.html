@@ -8,6 +8,8 @@
       
       
       
+        <link rel="canonical" href="https://arellanobrunoc.github.io/FleetingViews/">
+      
       
       
         <link rel="next" href="getting-started/">
@@ -66,11 +68,6 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
-      
-        
-        <a href="#welcome-to-fleetingviews" class="md-skip">
-          Skip to content
-        </a>
       
     </div>
     <div data-md-component="announce">
@@ -225,19 +222,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
         
@@ -248,67 +232,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#features-v018" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✨ Features (v0.1.8)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      📦 Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-fleetingviews" class="md-nav__link">
-    <span class="md-ellipsis">
-      ❓ Why FleetingViews?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="❓ Why FleetingViews?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      Repository
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -451,58 +374,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#features-v018" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✨ Features (v0.1.8)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      📦 Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-fleetingviews" class="md-nav__link">
-    <span class="md-ellipsis">
-      ❓ Why FleetingViews?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="❓ Why FleetingViews?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      Repository
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -520,41 +391,9 @@
   
 
 
-<p><img alt="FleetingViews Logo" src="logo.png" /></p>
-<h1 id="welcome-to-fleetingviews">Welcome to FleetingViews 👋</h1>
-<p><strong>FleetingViews</strong> is a lightweight but powerful utility class that simplifies <strong>view management</strong> in <a href="https://flet.dev">Flet</a> applications.<br />
-Inspired by modern frontend routing systems, FleetingViews provides tools to <strong>create, switch, animate, and control</strong> views with ease—no boilerplate, no fuss.</p>
-<hr />
-<h2 id="features-v018">✨ Features (v0.1.8)</h2>
-<ul>
-<li>🚀 Easy view declaration and dynamic navigation</li>
-<li>🧭 Built-in navigation history with <code>go_back()</code></li>
-<li>🧱 Add controls dynamically from views</li>
-<li>🎭 Animated transitions between views</li>
-<li>🧩 Lifecycle hooks (<code>on_mount</code>, <code>on_dismount</code>, <code>on_view_change</code>)</li>
-<li>🛡️ Guard functions to protect certain views</li>
-<li>🧃 Support for drawers, FABs, AppBars.</li>
-<li>🧩 Easy to modularize view definitions and logic</li>
-<li>🌐 Easily pass and handle query parameters in views with FleetingViews</li>
-<li>🔄 Seamlessly share data across views and components with FleetingViews</li>
-</ul>
-<hr />
-<h2 id="installation">📦 Installation</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>fleetingviews
-</code></pre></div>
-<h2 id="why-fleetingviews">❓ Why FleetingViews?</h2>
-<p>Managing multiple views in a Flet app can quickly get messy.<br />
-<strong>FleetingViews</strong> helps you:</p>
-<ul>
-<li>🧹 Organize your views declaratively</li>
-<li>🔄 Handle transitions and user navigation easily</li>
-<li>🧠 Inject custom behavior with guards and hooks</li>
-<li>🧑‍💻 Focus on your app logic, not view plumbing</li>
-</ul>
-<blockquote>
-<p>“With FleetingViews, you think about <em>what</em> your app does not <em>how</em> to juggle UI blocks.”</p>
-</blockquote>
-<h4 id="repository"><a href="https://github.com/ArellanoBrunoc/FleetingViews">Repository</a></h4>
+  <h1>Home</h1>
+
+
 
 
 
