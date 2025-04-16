@@ -5,8 +5,7 @@ repo_name: ArellanoBrunoc/FleetingViews
 
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 theme:
-  name: material
-  logo: logo.png  # Asegúrate de tener este archivo en la raíz del proyecto
+  name: mkdocs  # Cambié el tema a 'mkdocs'
   favicon: favicon.ico  # Asegúrate de tener este archivo en la raíz del proyecto
   icon:
     repo: fontawesome/brands/github
