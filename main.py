@@ -2,25 +2,22 @@ import flet as ft
 import FleetingViews as fleetingViews
 
 
+
 def main(page: ft.Page):
-    
-    
+
     
     page.padding = ft.padding.all(0)
-    home_drawer = ft.NavigationDrawer(
-      controls=[
-          ft.Container(height=12),
-          ft.NavigationDrawerDestination(
-              label="IM THE HOME DRAWER",
-              icon=ft.Icons.HOME,
-              selected_icon_content=ft.Icon(ft.Icons.HOME_FILLED),
-          )
-      ]
-    )
+
+ 
+
+        
     appbar = ft.AppBar(
+                        leading= ft.IconButton(icon=ft.Icons.ARROW_BACK_IOS, on_click=lambda e: fv.go_back()),
                         actions=[
                                 ft.IconButton(icon=ft.Icons.HOME, on_click=lambda e: fv.view_go("home?id=23")),
-                                ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e:fv.view_go("settings?id=24&login_key=hello_world"))
+                                ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e:fv.view_go("settings?id=24&login_key=hello_world")),
+                                ft.IconButton(icon=ft.Icons.SCREEN_LOCK_LANDSCAPE, on_click=lambda e:fv.view_go("projects?id=projects")),
+                                ft.IconButton(icon=ft.Icons.ERROR, on_click=lambda e: fv.view_go("homses?id=23"))
                                 
 
                                 ])
@@ -31,28 +28,37 @@ def main(page: ft.Page):
             'bgcolor': ft.Colors.BLUE_GREY,
             'vertical_alignment': ft.MainAxisAlignment.CENTER,
             'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
-            "drawer":home_drawer,
-            "appbar": appbar
+            "appbar": appbar,
         },
         'settings': {
             'bgcolor': ft.Colors.AMBER_900,
             'vertical_alignment': ft.MainAxisAlignment.CENTER,
             'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
-            "appbar": appbar
+            "appbar": appbar,
 
+        },
+        'projects': {
+            'bgcolor': ft.Colors.GREEN_200,
+            'vertical_alignment': ft.MainAxisAlignment.CENTER,
+            'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
+            "appbar": appbar,
+        },
+        '404_not_found': {
+            'bgcolor': ft.Colors.RED_300,
+            'vertical_alignment': ft.MainAxisAlignment.CENTER,
+            'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
+            "controls": [                ft.Text("Oops! This page doesn't exist (404)", size=30, weight="bold", color=ft.Colors.BLACK),
+                ft.Text("Please check the URL or go back to a known view.",color=ft.Colors.BLACK)],
+            "appbar": appbar,
         },
     }
 
-    def my_callback(view, params):
-        print("View_change!" ,"Params: ",view, params)
-    
     # Create instances of FleetingViews and configure views and controls
     fv = fleetingViews.create_views(view_definitions=view_definitions, page=page)
     
-    fv.on_view_change = my_callback
 
 
-    button_home = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!",on_click=lambda e: print(fv.get_params()))
+    button_home = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!",on_click=lambda e: fv.update_view("home", {"bgcolor":  ft.Colors.RED,'horizontal_alignment': ft.CrossAxisAlignment.START }))
 
     button_settings = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!", on_click=lambda e: print(fv.get_params()))
 

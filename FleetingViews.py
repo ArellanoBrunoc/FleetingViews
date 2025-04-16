@@ -31,8 +31,120 @@ class FleetingViews:
         self.is_executing = False  # Semaphore to control the execution of view_go and go_back()
         
         self.shared_data = {}
-        
+        self.guards = {}
         self.on_view_change = None
+        self.fallback_404 = False
+        
+    def update_view(self, view_name: str, param, value=None, update: bool = True):
+        """
+        Sets one or more parameters for a given view.
+
+        Args:
+            view_name (str): The name of the view to modify.
+            param (str | dict): A single parameter name as string, or a dictionary of parameter-value pairs.
+            value: The value to assign if a single parameter is passed.
+            update (bool): Whether to trigger a page update after setting the parameter(s). Default is True.
+
+        Raises:
+            ValueError: If the view does not exist or any parameter is invalid.
+
+        Example:
+            views.set_view_param('home', 'bgcolor', ft.Colors.RED)
+            views.set_view_param('home', {'bgcolor': ft.Colors.RED, 'appbar': my_appbar})
+        """
+        if view_name not in self.views:
+            raise ValueError(f"View '{view_name}' does not exist.")
+
+        view = self.views[view_name]
+
+        if isinstance(param, dict):
+            for key, val in param.items():
+                if not hasattr(view, key):
+                    raise ValueError(f"Invalid parameter '{key}' for view '{view_name}'.")
+                setattr(view, key, val)
+        else:
+            if not hasattr(view, param):
+                raise ValueError(f"Invalid parameter '{param}' for view '{view_name}'.")
+            setattr(view, param, value)
+
+        if update:
+            self.page.update()
+
+    def get_all_views(self):
+        """
+        Returns a list of all view names currently defined in the FleetingViews instance.
+
+        Returns:
+            list: A list of view names (strings) that are currently registered.
+
+        Example:
+            all_views = views.get_all_views()
+            print(all_views)
+        
+        Returns a list of strings representing the names (routes) of all defined views.
+        """
+        return list(self.views.keys())
+
+    def get_actual_view_name(self):
+        """
+        Retrieves the name of the current view being displayed.
+
+        This method accesses the `route` property of the current `actual_view` and returns it,
+        which can be useful to track or log the current view in the application.
+
+        Returns:
+            str: The route (name) of the current view.
+
+        Example:
+            current_view_name = views.get_actual_view_name()
+            print(current_view_name)
+        
+        Returns the name of the active view, which corresponds to the route associated with it.
+        """
+        return self.actual_view.route
+
+    def get_shared(self, key: str, default=None):
+        """
+        Retrieves the value associated with the given key from the shared data.
+
+        If the key is not found in the shared data, a KeyError is raised, and a custom message is printed.
+        If the key is not found, the method returns the default value provided.
+
+        Args:
+            key (str): The key to look up in the shared data.
+            default: The value to return if the key is not found. Defaults to None.
+
+        Returns:
+            The value associated with the given key, or the default value if the key is not found.
+
+        Example:
+            shared_value = views.get_shared('user_data', default='No data')
+            print(shared_value)
+        
+        Prints a custom message in case of a missing key, and returns the default value.
+        """
+        try:
+            return self.shared_data[key]
+        except KeyError:
+            print(f"KeyError {key} is not a valid key in this FleetingViews shared data")
+            return default
+
+    def set_shared(self, key: str, value):
+        """
+        Sets the value for the specified key in the shared data.
+
+        This method allows you to store data globally accessible across views within the application.
+
+        Args:
+            key (str): The key to associate with the value.
+            value: The value to store under the provided key.
+
+        Example:
+            views.set_shared('user_data', {'name': 'John', 'age': 30})
+        
+        Stores the data for 'user_data' in the shared data.
+        """
+        self.shared_data[key] = value
 
     def save_data_to_json(self, path="shared_data.json"):
         """
@@ -62,12 +174,140 @@ class FleetingViews:
         Returns the full dictionary of current query parameters.
         """
         return self._query_params.copy()
+    
+    def add_hooks_or_guards(self, view_name: str, hooks_or_guards: dict) -> None:
+        """
+        Adds additional hooks or guards to the existing view.
 
-    def view_go(self, view_name: str, back: bool = False, duration: int = 0, mode: str = "top_left"):
+        Parameters:
+        view_name (str): The name of the view to which hooks or guards should be added.
+        hooks_or_guards (dict): A dictionary containing the hooks or guards to be added. 
+                                Keys should be 'on_mount', 'on_dismount', or 'guards'.
+                                Values should be a single function or a list of functions.
+        """
+        # Get the view object
+        view = self.views.get(view_name.lower())
+        if not view:
+            raise ValueError(f"View '{view_name}' not found.")
+
+        # Add or merge hooks (on_mount, on_dismount)
+        if 'on_mount' in hooks_or_guards:
+            on_mount = hooks_or_guards['on_mount']
+            existing_on_mount = getattr(self.views[view_name], "__on_mount__", [])
+            if isinstance(existing_on_mount, list):
+                existing_on_mount.extend(on_mount if isinstance(on_mount, list) else [on_mount])
+            else:
+                existing_on_mount = [existing_on_mount] if callable(existing_on_mount) else []
+                existing_on_mount.append(on_mount if callable(on_mount) else [on_mount])
+            setattr(view, "__on_mount__", existing_on_mount)
+
+        if 'on_dismount' in hooks_or_guards:
+            on_dismount = hooks_or_guards['on_dismount']
+            existing_on_dismount = getattr(self.views[view_name], "__on_dismount__", [])
+            if isinstance(existing_on_dismount, list):
+                existing_on_dismount.extend(on_dismount if isinstance(on_dismount, list) else [on_dismount])
+            else:
+                existing_on_dismount = [existing_on_dismount] if callable(existing_on_dismount) else []
+                existing_on_dismount.append(on_dismount if callable(on_dismount) else [on_dismount])
+            setattr(view, "__on_dismount__", existing_on_dismount)
+
+        # Add or merge guards
+        if 'guards' in hooks_or_guards:
+            guards = hooks_or_guards['guards']
+            existing_guards = getattr(self.views[view_name], "__guards__", [])
+            if isinstance(existing_guards, list):
+                existing_guards.extend(guards if isinstance(guards, list) else [guards])
+            else:
+                existing_guards = [existing_guards] if callable(existing_guards) else []
+                existing_guards.append(guards if callable(guards) else [guards])
+            setattr(view, "__guards__", existing_guards)
+
+
+    
+    def _run_hook(self, hook, context=None):
+        """
+        Parameters:
+
+        hook (Callable or List[Callable]):
+        A single function or a list of functions to be executed. Each function should accept a Context object as its only argument.
+        If None is passed, the function does nothing.
+
+        ctx (Context):
+        The context object that provides information about the current view state, including parameters, view route, and more.
+
+        Behavior:
+
+        If hook is None, the function returns immediately.
+
+        If hook is a list, it runs all functions in order, passing ctx to each one.
+
+        If hook is a single function, it is simply called with ctx.
+        """
+        try:
+
+            if hook is None:
+                return  
+            
+            if isinstance(hook, list):
+ 
+                if not all(callable(fn) for fn in hook):
+                    raise TypeError(f"Todos los elementos de la lista 'hook' deben ser funciones. Se encontró un valor no callable.")
+                
+
+                for fn in hook:
+                    self._run_hook(fn, context) 
+
+
+            elif callable(hook):
+
+                if hook.__code__.co_argcount == 0:
+                    hook() 
+                else:
+                    hook(context)  
+            else:
+
+                raise TypeError(f"'hook' value must be a function or a list of functions. Found: {type(hook)}")
+
+        except Exception as e:
+            print(f"[FleetingViews] Error en hook: {e}")
+
+
+
+    def _run_guards(self, name: str) -> bool:
+        if name not in self.views:
+            return True
+        
+        guards = getattr(self.views[name], "__guards__", None)
+        if not guards:
+            return True
+
+        if callable(guards):
+            guard_name = getattr(guards, "__name__", str(guards))
+            if not guards(self, name):
+                print(f"Guard '{guard_name}' blocked navigation to {name}")
+                return False
+
+        elif isinstance(guards, list):
+            for guard_func in guards:
+                if not callable(guard_func):
+                    raise TypeError(f"Each guard must be a callable function. Found: {type(guard_func)}")
+                guard_name = getattr(guard_func, "__name__", str(guard_func))
+                if not guard_func(self, name):
+                    print(f"Guard '{guard_name}' blocked navigation to {name}")
+                    return False
+
+        else:
+            raise TypeError(f"'__guards__' must be a callable or a list of callables. Found: {type(guards)}")
+
+        return True
+
+
+    def view_go(self, view_name: str, back: bool = False, duration: int = 0, mode: str = "top_left", history_debug:bool = False):
         if self.is_executing:
             return
         self.is_executing = True
 
+        
         try:
             # ✳️ Separar nombre y parámetros tipo query string
             if '?' in view_name:
@@ -78,12 +318,20 @@ class FleetingViews:
                 self._query_params = {}
 
             name = name.lower()
-
+            
+            if not self._run_guards(name):
+                return
+            
             if name in self.views:
+    
+
                 next_view = self.views[name]
 
                 if self.actual_view == next_view:
                     return
+                
+                if hasattr(self.actual_view, "__on_dismount__"):
+                    self._run_hook(getattr(self.actual_view, "__on_dismount__"), self)
 
                 if duration > 0:
                     self.animation(duration, next_view_name=name, mode=mode)
@@ -97,42 +345,70 @@ class FleetingViews:
 
                 self.page.views.append(next_view)
 
-                if back:
-                    if self.prev_views:
-                        self.prev_views.pop()
-                else:
-                    if self.actual_view and self.actual_view.route in self.prev_views:
-                        self.prev_views.remove(self.actual_view.route)
-                    if self.actual_view:
-                        self.prev_views.append(self.actual_view.route)
+
+                
+                if not back and self.actual_view:
+                    actual_route = self.actual_view.route if self.actual_view else None
+                    next_route = next_view.route
+
+                    # 1. Eliminar cualquier entrada del historial que apunte a la vista destino (next_view)
+                    self.prev_views = [view for view in self.prev_views if view["view_name"] != next_route]
+
+                    # 2. Verificar si la vista actual no está ya en el historial
+                    is_actual_in_history = any(view["view_name"] == actual_route for view in self.prev_views)
+
+                    if not is_actual_in_history and actual_route and actual_route != "404_not_found":
+                        self.prev_views.append({
+                            "view_name": actual_route,
+                            "params": self._query_params,
+                        })
+                    if history_debug:
+                        print("🔙 Updated history:", self.prev_views)
 
                 self.actual_view = next_view
                 self.page.update()
-                
+
+                if hasattr(next_view, "__on_mount__"):
+                    self._run_hook(getattr(next_view, "__on_mount__"), self)
+
                 if callable(self.on_view_change):
                     self.on_view_change(name, self._query_params)
             else:
-                raise ValueError(f"{name} is not a view of this FleetingViews")
+                if not "404_not_found" in self.views:
+                    raise ValueError(f"{name} is not a view of this FleetingViews")
+                else:
+                    self.is_executing = False
+                    self.view_go("404_not_found")
         finally:
             self.is_executing = False
-
-
-        
-    def go_back(self, duration:int = 0, mode:str="top_left"):
-
+       
+    def go_back(self, duration: int = 0, mode: str = "top_left", history_debug:bool= False):
         """
-        Changes the current displayed view to one in the past
-
+        Navega a la vista anterior usando el historial.
+        Si no hay historial, va a la primera vista registrada.
         """
         if self.is_executing:
             return
+
         if len(self.prev_views) > 0:
-            self.view_go(self.prev_views[-1], back=True, duration=duration, mode=mode)
+            last_view = self.prev_views.pop()  # LIFO, como una pila
+            if history_debug:
+                print("⏪ Going back to:", last_view)
+
+            view_name = last_view["view_name"]
+            params = last_view.get("params", {})
+            if params:
+                query_string = "&".join([f"{key}={value}" for key, value in params.items()])
+                view_name = f"{view_name}?{query_string}"
+
+            self.view_go(view_name, back=True, duration=duration, mode=mode)
         else:
+            # No hay historial, vamos a la primera vista conocida
             first_view = next(iter(self.views))
+            self.prev_views = []  # Limpiamos por si acaso
             self.view_go(first_view, duration=duration, mode=mode)
-            self.prev_views =[]
-        
+
+
     def clear(self):
         """
         Clears back history
@@ -277,7 +553,6 @@ class FleetingViews:
         self.actual_view.padding = original_padding
         self.actual_view.controls = original_controls
 
-
     def open_drawer(self, drawer, position: str = "start"):
         """
         Opens the specified drawer on the given position ('start' or 'end') of the current view.
@@ -399,23 +674,22 @@ def create_custom_view(route,
     )
 
 
-def create_views(view_definitions: dict, page: ft.Page):
+def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = True):
     """
     Adds a control or a list of controls to a specific view. 
     If the working view is the same as the argument, behaves like the append method.
 
     Args:
-        view_definitions (dict): A dictionary with keys that contains the characteristics of the desired view, note that the 1st added view will be taken as root
-        Page : flet page element to initialize the views.
+        view_definitions (dict): Diccionario de definiciones para cada vista.
+        page (flet.Page): Página Flet donde se montan las vistas.
+        fallback_404 (bool): Si es True, añade una vista por defecto para rutas no encontradas ('404_not_found').
 
-    Raises:
-        ValueError: If there is a definition that is not an string or contains spaces // if view_definitions is not a dict.
-
-    Returns: a FleetingViews object to manage views on the application
+    Returns:
+        FleetingViews: Objeto para gestionar la navegación y ciclo de vida de las vistas.
     """
     page.views.pop(0)
 
-    # Verify if names are valid strings and keys are valid dictionaries.
+    # Validación
     for view_name, view_args in view_definitions.items():
         if not isinstance(view_name, str) or ' ' in view_name:
             raise ValueError("All names of views must be strings without spaces.")
@@ -424,7 +698,11 @@ def create_views(view_definitions: dict, page: ft.Page):
 
     views_dict = {}
     for view_name, view_args in view_definitions.items():
-        # Usa create_custom_view con argumentos del diccionario y valores por defecto para los no entregados
+        # Extraer hooks si están definidos
+        on_mount = view_args.pop("on_mount", None)
+        on_dismount = view_args.pop("on_dismount", None)
+        guards = view_args.pop("guards", None)
+
         views_dict[view_name.lower()] = create_custom_view(
             route=view_args.get('route', view_name.lower()),
             appbar=view_args.get('appbar', None),
@@ -443,7 +721,41 @@ def create_views(view_definitions: dict, page: ft.Page):
         )
         initialize_view(views_dict[view_name.lower()], page)
 
+        # Hooks y guards
+        if on_mount:
+            setattr(views_dict[view_name.lower()], "__on_mount__", on_mount)
+        if on_dismount:
+            setattr(views_dict[view_name.lower()], "__on_dismount__", on_dismount)
+        if guards:
+            setattr(views_dict[view_name.lower()], "__guards__", guards)
+
+    button_back =  ft.IconButton(icon=ft.Icons.ARROW_CIRCLE_LEFT_ROUNDED, icon_size=30, icon_color=ft.Colors.BLACK)
+    # Vista 404 por defecto si se solicita
+    if fallback_404 and "404_not_found" not in views_dict:
+        
+        views_dict["404_not_found"] = create_custom_view(
+            route="404_not_found",
+            bgcolor=ft.colors.RED_100,
+            controls=[
+                ft.Text("Oops! This page doesn't exist (404)", size=30, weight="bold", color=ft.Colors.BLACK),
+                ft.Text("Please check the URL or go back to a known view.",color=ft.Colors.BLACK),
+                button_back
+            ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            vertical_alignment=ft.MainAxisAlignment.CENTER,
+            auto_scroll=True,
+            spacing=20,
+            padding=ft.padding.all(40),
+        )
+        initialize_view(views_dict["404_not_found"], page)
+
+
+            
     fv = FleetingViews(page, views_dict)
+    
+    if fallback_404:
+        button_back.on_click = lambda e: fv.go_back()
+    
     first_view = next(iter(fv.views))
     fv.view_go(first_view)
     fv.prev_views = []
