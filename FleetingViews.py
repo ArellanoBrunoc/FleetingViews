@@ -29,7 +29,7 @@ class FleetingViews:
         self.prev_views = []
         self.working_view = views[last_view]
         self.is_executing = False  # Semaphore to control the execution of view_go and go_back()
-        
+        self._query_params = {}
         self.shared_data = {}
         self.guards = {}
         self.on_view_change = None
@@ -451,6 +451,7 @@ class FleetingViews:
         Raises:
             ValueError: If the view name is not in the views dictionary.
         """
+        
         if isinstance(controls, list):
             for control in controls:
                 self.working_view.controls.append(control)
