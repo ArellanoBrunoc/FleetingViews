@@ -4,23 +4,32 @@ import FleetingViews as fleetingViews
 
 
 def main(page: ft.Page):
-
+    logged = True
     
     page.padding = ft.padding.all(0)
 
     def my_on_mount_hook_dos(ctx):
         print(f"hola {ctx.actual_view.route} dos" )
     
-    def my_on_mount_hook_tres(ctx):
-        print(f"hola {ctx.actual_view.route} tres")
+    def my_guard(ctx, name):
+        if not logged:
+            return False
+        return True
+    
+    def change(e):
+        nonlocal logged
+        logged = False
+        fv.add_hooks_or_guards("home", {"guards": my_guard})
+
         
     appbar = ft.AppBar(
-                        leading= ft.IconButton(icon=ft.Icons.ARROW_BACK_IOS, on_click=lambda e: fv.add_hooks_or_guards("home", {"on_mount": my_on_mount_hook_dos})),
+                        leading= ft.IconButton(icon=ft.Icons.ARROW_BACK_IOS, on_click=lambda e: fv.remove_hooks_or_guards("home", {"guards": my_guard})),
                         actions=[
                                 ft.IconButton(icon=ft.Icons.HOME, on_click=lambda e: fv.view_go("home?id=23")),
                                 ft.IconButton(icon=ft.Icons.SETTINGS, on_click=lambda e:fv.view_go("settings?id=24&login_key=hello_world")),
                                 ft.IconButton(icon=ft.Icons.SCREEN_LOCK_LANDSCAPE, on_click=lambda e:fv.view_go("projects?id=projects")),
-                                ft.IconButton(icon=ft.Icons.ERROR, on_click=lambda e: fv.view_go("homses?id=23"))
+                                ft.IconButton(icon=ft.Icons.ERROR, on_click=lambda e: fv.view_go("homses?id=23")),
+                                 ft.IconButton(icon=ft.Icons.GROUP_ADD_ROUNDED, on_click=change )
                                 
 
                                 ])
@@ -34,7 +43,7 @@ def main(page: ft.Page):
             'vertical_alignment': ft.MainAxisAlignment.CENTER,
             'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
             "appbar": appbar,
-            "guards": my_on_mount_hook
+
         },
         'settings': {
             'bgcolor': ft.Colors.AMBER_900,
@@ -49,14 +58,7 @@ def main(page: ft.Page):
             'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
             "appbar": appbar,
         },
-        '404_not_found': {
-            'bgcolor': ft.Colors.RED_300,
-            'vertical_alignment': ft.MainAxisAlignment.CENTER,
-            'horizontal_alignment': ft.CrossAxisAlignment.CENTER,
-            "controls": [                ft.Text("Oops! This page doesn't exist (404)", size=30, weight="bold", color=ft.Colors.BLACK),
-                ft.Text("Please check the URL or go back to a known view.",color=ft.Colors.BLACK)],
-            "appbar": appbar,
-        },
+
     }
 
     # Create instances of FleetingViews and configure views and controls

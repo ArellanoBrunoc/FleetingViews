@@ -175,6 +175,41 @@ class FleetingViews:
         """
         return self._query_params.copy()
     
+    def remove_hooks_or_guards(self, view_name: str, hooks_or_guards: dict) -> None:
+        """
+        Removes specified hooks or guards from an existing view.
+
+        Parameters:
+            view_name (str): The name of the view from which hooks or guards should be removed.
+            hooks_or_guards (dict): A dictionary where keys can be 'on_mount', 'on_dismount', or 'guards',
+                                    and values can be a single function or a list of functions to remove.
+        """
+        view = self.views.get(view_name.lower())
+        if not view:
+            raise ValueError(f"View '{view_name}' not found.")
+
+        def _remove_from_attr(attr_name: str, funcs_to_remove):
+            current = getattr(view, attr_name, [])
+            if not isinstance(current, list):
+                current = [current] if callable(current) else []
+
+            if not isinstance(funcs_to_remove, list):
+                funcs_to_remove = [funcs_to_remove]
+
+            filtered = [f for f in current if f not in funcs_to_remove]
+            setattr(view, attr_name, filtered)
+
+        valid_keys = {
+            "on_mount": "__on_mount__",
+            "on_dismount": "__on_dismount__",
+            "guards": "__guards__"
+        }
+
+        for key, funcs in hooks_or_guards.items():
+            if key not in valid_keys:
+                raise ValueError(f"Invalid hook/guard key: '{key}'. Must be one of {list(valid_keys.keys())}.")
+            _remove_from_attr(valid_keys[key], funcs)
+
     def add_hooks_or_guards(self, view_name: str, hooks_or_guards: dict) -> None:
         """
         Adds additional hooks or guards to the existing view.
@@ -297,7 +332,7 @@ class FleetingViews:
 
         
         try:
-            # ✳️ Separar nombre y parámetros tipo query string
+
             if '?' in view_name:
                 name, query = view_name.split('?', 1)
                 self._query_params = dict(urllib.parse.parse_qsl(query))
@@ -340,10 +375,10 @@ class FleetingViews:
                     actual_route = self.actual_view.route if self.actual_view else None
                     next_route = next_view.route
 
-                    # 1. Eliminar cualquier entrada del historial que apunte a la vista destino (next_view)
+                   
                     self.prev_views = [view for view in self.prev_views if view["view_name"] != next_route]
 
-                    # 2. Verificar si la vista actual no está ya en el historial
+
                     is_actual_in_history = any(view["view_name"] == actual_route for view in self.prev_views)
 
                     if not is_actual_in_history and actual_route and actual_route != "404_not_found":
@@ -380,7 +415,7 @@ class FleetingViews:
             return
 
         if len(self.prev_views) > 0:
-            last_view = self.prev_views.pop()  # LIFO, como una pila
+            last_view = self.prev_views.pop()  
             if history_debug:
                 print("⏪ Going back to:", last_view)
 
@@ -392,9 +427,9 @@ class FleetingViews:
 
             self.view_go(view_name, back=True, duration=duration, mode=mode)
         else:
-            # No hay historial, vamos a la primera vista conocida
+            
             first_view = next(iter(self.views))
-            self.prev_views = []  # Limpiamos por si acaso
+            self.prev_views = []  
             self.view_go(first_view, duration=duration, mode=mode)
 
 
@@ -719,7 +754,7 @@ def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = Tru
         if guards:
             setattr(views_dict[view_name.lower()], "__guards__", guards)
 
-    button_back =  ft.IconButton(icon=ft.Icons.ARROW_CIRCLE_LEFT_ROUNDED, icon_size=30, icon_color=ft.Colors.BLACK)
+    button_back =  ft.IconButton(icon=ft.Icons.ARROW_CIRCLE_LEFT_ROUNDED, icon_size=30, icon_color=ft.Colors.BLACK, on_click=lambda e: fv.view_go(next(iter(fv.views))))
     # Vista 404 por defecto si se solicita
     if fallback_404 and "404_not_found" not in views_dict:
         
