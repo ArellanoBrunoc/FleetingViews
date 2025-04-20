@@ -6,12 +6,12 @@ FleetingViews is a utility class designed for managing views within Flet applica
 
 ## Installation
 ```
-pip install fleeting-views
+pip install fleetingviews
 ```
 
 ## Upgradation
 ```
-pip install fleeting-views --upgrade
+pip install fleetingviews --upgrade
 ```
 
 
