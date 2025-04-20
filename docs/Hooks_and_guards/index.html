@@ -361,7 +361,7 @@
           <li class="md-nav__item">
   <a href="#notes" class="md-nav__link">
     <span class="md-ellipsis">
-      Notes:
+      Notes
     </span>
   </a>
   
@@ -375,7 +375,7 @@
         <li class="md-nav__item">
   <a href="#on_view_change-hook" class="md-nav__link">
     <span class="md-ellipsis">
-      on_view_change Hook:
+      on_view_change Hook
     </span>
   </a>
   
@@ -409,17 +409,26 @@
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#removing-hooks-or-guards-v019" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removing hooks or guards (v0.1.9)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#full-lifecycle" class="md-nav__link">
     <span class="md-ellipsis">
       Full Lifecycle
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -548,7 +557,7 @@
           <li class="md-nav__item">
   <a href="#notes" class="md-nav__link">
     <span class="md-ellipsis">
-      Notes:
+      Notes
     </span>
   </a>
   
@@ -562,7 +571,7 @@
         <li class="md-nav__item">
   <a href="#on_view_change-hook" class="md-nav__link">
     <span class="md-ellipsis">
-      on_view_change Hook:
+      on_view_change Hook
     </span>
   </a>
   
@@ -596,17 +605,26 @@
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#removing-hooks-or-guards-v019" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removing hooks or guards (v0.1.9)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#full-lifecycle" class="md-nav__link">
     <span class="md-ellipsis">
       Full Lifecycle
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -629,7 +647,7 @@
 
 
 <h1 id="hooks-guards-in-fleetingviews-v018">🔒 Hooks &amp; Guards in FleetingViews (v0.1.8)</h1>
-<p>FleetingViews supports <strong>lifecycle hooks</strong> and <strong>navigation guards</strong> to help you manage your views' logic more dynamically and safely.</p>
+<p>FleetingViews supports <strong>lifecycle hooks</strong> and <strong>navigation guards</strong> to help you manage your view's logic more dynamically and safely.</p>
 <hr />
 <h2 id="lifecycle-hooks">🪝 Lifecycle Hooks</h2>
 <p>You can attach functions to specific views that run <strong>when the view is mounted or dismounted</strong>. These functions are useful for initializing resources, fetching data, or cleaning up when navigating between views.</p>
@@ -676,12 +694,12 @@
 <a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
 <a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="notes">Notes:</h3>
+<h3 id="notes">Notes</h3>
 <ul>
 <li>It is advised that the hooks are given a context argument to get useful information in the manager ex: <code>ctx.get_param("param_name", default)</code> will give you the parameter, you can also use <code>ctx.get_params()</code>.</li>
 <li>You can't create hooks that receive more than <code>ctx</code>.</li>
 </ul>
-<h2 id="on_view_change-hook"><code>on_view_change</code> Hook:</h2>
+<h2 id="on_view_change-hook"><code>on_view_change</code> Hook</h2>
 <p>You can now define an <code>on_view_change</code> callback that gets executed <strong>every time the active view changes</strong>, regardless of where the navigation came from.</p>
 <p>This is useful for analytics, layout adjustments, logging, or global effects when the view changes.</p>
 <blockquote>
@@ -735,7 +753,23 @@
 <a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
 <a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="full-lifecycle">Full Lifecycle</h3>
+<h2 id="removing-hooks-or-guards-v019">Removing hooks or guards (v0.1.9)</h2>
+<p>FleetingViews also permits you to remove hooks or guards during execution. In a very similar way as to how you'd add them:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span> <span class="nf">is_user_logged_in</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="c1"># Only allow access if the user is logged in</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;logged_in&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Remove a single guard from a view</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">fv</span><span class="o">.</span><span class="n">remove_hooks_or_guards</span><span class="p">(</span><span class="s2">&quot;dashboard&quot;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="s2">&quot;guards&quot;</span><span class="p">:</span> <span class="n">is_user_logged_in</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">})</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># Or multiple at once</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">fv</span><span class="o">.</span><span class="n">remove_hooks_or_guards</span><span class="p">(</span><span class="s2">&quot;dashboard&quot;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="s2">&quot;guards&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">is_user_logged_in</span><span class="p">,</span> <span class="n">other_function</span><span class="p">]</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">})</span>
+</code></pre></div>
+<h2 id="full-lifecycle">Full Lifecycle</h2>
 <p>Navigation attempt -&gt; Run Guards -&gt; [All True?] -&gt; Run on_dismounts -&gt; Change View -&gt; Run on_mounts -&gt; Run on_view_change</p>
 
 
