@@ -1,6 +1,6 @@
 # 🔒 Hooks & Guards in FleetingViews (v0.1.8)
 
-FleetingViews supports **lifecycle hooks** and **navigation guards** to help you manage your views' logic more dynamically and safely.
+FleetingViews supports **lifecycle hooks** and **navigation guards** to help you manage your view's logic more dynamically and safely.
 
 ---
 
