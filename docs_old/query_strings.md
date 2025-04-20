@@ -43,20 +43,20 @@ Once you've navigated to a view with query parameters, you can access those para
 
 ```python
 # Access query parameters inside the 'profile' view
-    def profile_view(fv):
-        user_id = fv.get_param("user_id", "guest")
-        theme = fv.get_param("theme", "light")
-    
-    # Use the parameters in your view
-    print(f"User ID: {user_id}")
-    print(f"Theme: {theme}")
+def profile_view(fv):
+    user_id = fv.get_param("user_id", "guest")
+    theme = fv.get_param("theme", "light")
 
-    # Add some controls or logic based on the parameters
-    controls = [
-        ft.Text(f"Welcome, {user_id}!"),
-        ft.Text(f"Theme: {theme}"),
-    ]
-    fv.append("profile", controls)
+# Use the parameters in your view
+print(f"User ID: {user_id}")
+print(f"Theme: {theme}")
+
+# Add some controls or logic based on the parameters
+controls = [
+    ft.Text(f"Welcome, {user_id}!"),
+    ft.Text(f"Theme: {theme}"),
+]
+fv.append("profile", controls)
 
 ```
 ### Notes

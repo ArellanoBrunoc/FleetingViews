@@ -139,6 +139,7 @@ def main(page: ft.Page):
     }
 
     fv = fleetingviews.create_views(view_definitions=views, page=page)
+    fv.set_working("home")
     fv.wadd(ft.Text("Welcome to the home page"))
     fv.set_working("about")
     fv.wadd(ft.Text("This is the about page"))

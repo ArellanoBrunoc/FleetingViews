@@ -60,11 +60,11 @@ view_definitions = {
 
 }
 ```
-### Notes:
+### Notes
 * It is advised that the hooks are given a context argument to get useful information in the manager ex: `ctx.get_param("param_name", default)` will give you the parameter, you can also use `ctx.get_params()`.
 * You can't create hooks that receive more than `ctx`.
 
-## `on_view_change` Hook:
+## `on_view_change` Hook
 You can now define an `on_view_change` callback that gets executed **every time the active view changes**, regardless of where the navigation came from.
 
 This is useful for analytics, layout adjustments, logging, or global effects when the view changes.
@@ -136,5 +136,27 @@ view_definitions = {
 }
 ```
 
-### Full Lifecycle
+## Removing hooks or guards (v0.1.9)
+
+FleetingViews also permits you to remove hooks or guards during execution. In a very similar way as to how you'd add them:
+
+```python
+def is_user_logged_in(ctx, name):
+    # Only allow access if the user is logged in
+    return session.get("logged_in", False)
+
+# Remove a single guard from a view
+fv.remove_hooks_or_guards("dashboard", {
+    "guards": is_user_logged_in
+})
+
+# Or multiple at once
+fv.remove_hooks_or_guards("dashboard", {
+    "guards": [is_user_logged_in, other_function]
+})
+
+```
+
+
+## Full Lifecycle
 Navigation attempt -> Run Guards -> [All True?] -> Run on_dismounts -> Change View -> Run on_mounts -> Run on_view_change
