@@ -699,7 +699,7 @@ def create_custom_view(route,
     )
 
 
-def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = True):
+def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = True, direct = True):
     """
     Adds a control or a list of controls to a specific view. 
     If the working view is the same as the argument, behaves like the append method.
@@ -778,7 +778,8 @@ def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = Tru
             
     fv = FleetingViews(page, views_dict)
     first_view = next(iter(fv.views))
-    fv.view_go(first_view)
+    if direct:
+        fv.view_go(first_view)
     
     if fallback_404:
         button_back.on_click = lambda e: fv.view_go(first_view)
