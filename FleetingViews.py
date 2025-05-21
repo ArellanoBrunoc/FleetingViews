@@ -760,7 +760,7 @@ def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = Tru
         
         views_dict["404_not_found"] = create_custom_view(
             route="404_not_found",
-            bgcolor=ft.colors.RED_100,
+            bgcolor=ft.Colors.RED_100,
             controls=[
                 ft.Text("Oops! This page doesn't exist (404)", size=30, weight="bold", color=ft.Colors.BLACK),
                 ft.Text("Please check the URL or go back to a known view.",color=ft.Colors.BLACK),
