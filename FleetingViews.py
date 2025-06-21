@@ -550,7 +550,7 @@ class FleetingViews:
                                     height=self.page.window.height-self.views[next_view_name].padding.top-self.views[next_view_name].padding.bottom,
                                     bgcolor=self.views[next_view_name].bgcolor,
                                     margin=0,
-                                    animate_position=ft.animation.Animation(duration-10, ft.animation.AnimationCurve.LINEAR),
+                                    animate_position=ft.Animation(duration-10, ft.AnimationCurve.LINEAR),
                                     top=animation_modes[mode][0],
                                     left=animation_modes[mode][1],
                                     alignment=ft.alignment.center,
