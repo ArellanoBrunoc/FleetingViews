@@ -1,5 +1,5 @@
 import flet as ft
-import FleetingViews as fleetingViews
+import FleetingViews
 
 
 
@@ -62,7 +62,7 @@ def main(page: ft.Page):
     }
 
     # Create instances of FleetingViews and configure views and controls
-    fv = fleetingViews.create_views(view_definitions=view_definitions, page=page)
+    fv = FleetingViews.create_views(view_definitions=view_definitions, page=page)
     
     def my_hook(name, params):
         print(params, name)
