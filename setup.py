@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="fleetingviews",
-    version="0.1.9.post4",
+    version="0.2",
     author="Bruno Arellano",
     author_email="arellanobruno@hotmail.com",
     py_modules=['FleetingViews'],
