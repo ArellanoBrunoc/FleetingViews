@@ -70,7 +70,7 @@ def main(page: ft.Page):
     fv.on_view_change = my_hook
     button_home = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!",on_click=lambda e: fv.update_view("home", {"bgcolor":  ft.Colors.RED,'horizontal_alignment': ft.CrossAxisAlignment.START }))
 
-    button_settings = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!", on_click=lambda e: print(fv.get_params()))
+    button_settings = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!", on_click=lambda e:   test())
 
     home_container = ft.Container(
 
@@ -83,7 +83,7 @@ def main(page: ft.Page):
     
     settings_container = ft.Container(
 
-        content=ft.Text("Im the text of page SETTINGS", size=40),
+        content=ft.TextField(),
         
      
         alignment=ft.alignment.center,
@@ -100,5 +100,26 @@ def main(page: ft.Page):
 
 
     page.update()
+
+
+    fv.define_observable("username", "Invitado")
+
+    fv.subscribe("username", home_container.content)
+    fv.bind_to_control("username", settings_container.content)
+
+    def rayos(val):
+        print("Rayos, nuevo valor", val)
+
+    def test():
+        fv.set_observable("username", "Bruno")
+        fv.unsubscribe("username", rayos)
+        fv.set_observable("username", "Jose")
+        fv.unsubscribe("username", home_container.content)
+        fv.set_observable("username", "Federico")
+        
+        
+    fv.subscribe("username",None, rayos)
+
+
 
 ft.app(target=main)

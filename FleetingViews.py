@@ -34,7 +34,11 @@ class FleetingViews:
         self.guards = {}
         self.on_view_change = None
         self.fallback_404 = False
+        self._observable_values = {}  
+        self._observers = {}          
         
+        
+    
     def update_view(self, view_name: str, param, value=None, update: bool = True):
         """
         Sets one or more parameters for a given view.
@@ -661,9 +665,156 @@ class FleetingViews:
         else:
             raise ValueError("Drawer position must be 'start' or 'end'.")
 
-                    
-                    
 
+
+
+    def define_observable(self, key: str, initial_value=None):
+        """
+        Defines a new observable key and its initial value.
+
+        Args:
+            key (str): The name of the observable variable.
+            initial_value: The initial value assigned to the observable.
+
+        Raises:
+            ValueError: If the key is already defined.
+        """
+        if key in self._observable_values:
+            raise ValueError(f"Observable '{key}' is already defined.")
+
+        self._observable_values[key] = initial_value
+        self._observers[key] = []  # List of (target, updater) tuples
+
+        
+    def set_observable(self, key: str, value):
+        """
+        Updates the value of an observable and triggers all subscribers.
+
+        Args:
+            key (str): The observable key.
+            value: The new value to set.
+
+        Raises:
+            ValueError: If the key is not defined.
+        """
+        if key not in self._observable_values:
+            raise ValueError(f"Observable '{key}' is not defined.")
+        
+        self._observable_values[key] = value
+
+        # Call all updaters linked to this observable
+        for _, callback in self._observers[key]:
+            callback(value)
+
+
+    def subscribe(self, key: str, target, handler: callable = None):
+        """
+        Subscribes a control or function to an observable.
+
+        Args:
+            key (str): The observable key.
+            target: The Flet control (with .value) or any object to associate with the change.
+            handler (callable, optional): A function to execute when the observable changes.
+
+        Raises:
+            ValueError: If the observable is not defined.
+        """
+        if key not in self._observable_values:
+            raise ValueError(f"Observable '{key}' is not defined.")
+
+        # Prevent duplicate subscription
+        if any(sub[0] is target or sub[0] is handler for sub in self._observers[key]):
+            return
+
+        # Internal update function
+        def updater(val):
+            if hasattr(target, "value"):
+                target.value = str(val)
+            if handler:
+                handler(val)
+            self.page.update()
+
+        # Append as (target, updater)
+        self._observers[key].append((target if target is not None else handler, updater))
+
+        # Apply current value immediately
+        updater(self._observable_values[key])     
+    def bind_to_control(self, key: str, control):
+        """
+        Binds a two-way relationship between an observable and an input control.
+
+        The control must have a `.value` attribute and support `.on_change`.
+
+        Args:
+            key (str): The observable key to bind.
+            control: A Flet control (e.g., TextField, Dropdown) that supports two-way binding.
+
+        Raises:
+            ValueError: If the observable is not defined.
+        """
+        if key not in self._observable_values:
+            raise ValueError(f"Observable '{key}' is not defined.")
+
+        self.subscribe(key, control)
+
+        def on_change(e):
+            self.set_observable(key, control.value)
+
+        control.on_change = on_change
+    def unbind_control(self, key: str, control):
+        """
+        Fully unbinds a control from an observable, both ways.
+
+        Args:
+            key (str): The observable key.
+            control: The control to unbind.
+        """
+        self.unsubscribe(key, control)
+
+        if hasattr(control, "on_change"):
+            control.on_change = None
+
+    def unsubscribe(self, key: str, target_or_handler):
+        """
+        Removes a subscription from an observable, based on a control or a function.
+
+        Args:
+            key (str): The observable key.
+            target_or_handler: The control or function previously subscribed.
+
+        Raises:
+            ValueError: If the key is not defined or no subscriptions found.
+        """
+        if key not in self._observers:
+            raise ValueError(f"No subscriptions found for observable '{key}'.")
+
+        before_count = len(self._observers[key])
+        self._observers[key] = [
+            sub for sub in self._observers[key]
+            if sub[0] is not target_or_handler
+        ]
+        after_count = len(self._observers[key])
+
+        if before_count == after_count:
+            print(f"[FleetingViews] Warning: Target or handler not found in subscriptions for '{key}'.")
+                      
+    def clear_observables(self, force: bool = False):
+        """
+        Clears all observables and subscriptions.
+        You must pass force=True explicitly to confirm the action.
+
+        Args:
+            force (bool): Confirmation flag. Must be True to proceed.
+        """
+        if not force:
+            print("[FleetingViews] Warning: 'force=True' required to clear observables.")
+            return
+
+        self._observable_values.clear()
+        self._observers.clear()
+        print("[FleetingViews] All observables and subscriptions have been cleared.")
+        
+        
 def initialize_view(view:ft.View, page: ft.Page):
     page.views.append(view)
 
