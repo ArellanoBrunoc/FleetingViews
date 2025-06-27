@@ -20,6 +20,20 @@ Inspired by modern frontend routing systems, FleetingViews provides tools to **c
 - 🌐 Easily pass and handle query parameters in views with FleetingViews
 - 🔄 Seamlessly share data across views and components with FleetingViews
 
+✨ Features (v0.2)
+
+    ⚡ Reactive Observables with define_observable() and subscribe()
+
+    🔁 Two-Way Data Binding with bind_to_control()
+    Easily sync TextField, Dropdown, and similar inputs with shared state
+
+    🔂 unsubscribe() and unbind_control() to fully detach views or handlers
+
+    🧠 Mix UI and logic: auto-update controls, trigger functions, or both
+
+    🧪 Clean reactive flow: write once, update everywhere
+
+    🔧 Prepares ground for computed values, watchers, and persistence (coming soon)
 ---
 
 ## 📦 Installation
