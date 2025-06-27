@@ -1,26 +1,58 @@
+# 🌀 FleetingViews — View Management & Navigation for Flet
 
-# FleetingViews intents to facilitate Flet views usage.
+FleetingViews is a lightweight and powerful view management system for [Flet](https://flet.dev) apps.  
+It helps you structure your app around clean views, guards, transitions, and reactive state — inspired by the best practices of modern frontend frameworks.
 
+Think of it as a **router + state manager + lifecycle engine** for Flet.
 
-FleetingViews is a utility class designed for managing views within Flet applications. It simplifies the process of creating, navigating, and customizing views, similar to how web frameworks manage routes. FleetingViews allows you to define views with specific configurations, keep track of navigation history, and dynamically update view content.
+---
 
-## Installation
-```
+## 🚀 Features at a Glance
+
+✅ Easy view registration  
+✅ Route-based navigation with history  
+✅ Lifecycle hooks (`on_mount`, `on_dismount`)  
+✅ Guards (protect views based on logic)  
+✅ Reactive observables (`define_observable`, `subscribe`)  
+✅ Two-way data binding with controls (`bind_to_control`)  
+✅ Dynamic view transitions with animations  
+✅ Built-in fallback 404 view  
+✅ Shared global state (`set_shared`, `get_shared`)  
+✅ JSON state persistence (coming soon)
+
+---
+
+## 📦 Installation
+
+```bash
 pip install fleetingviews
 ```
 
-## Upgradation
-```
+To upgrade:
+
+```bash
 pip install fleetingviews --upgrade
 ```
 
+## 📹 Quick Start Tutorial (Video)
 
-#### [Repository](https://arellanobrunoc.github.io/FleetingViews/)
+Watch this [YouTube tutorial](https://www.youtube.com/watch?v=eCoyLg9uHiY) for a hands-on guide:
+
+    🔐 Protect views with guards
+
+    🎛️ Configure AppBars dynamically
+
+    🔁 Use view_go() to navigate
+
+    🧠 Structure your app cleanly using FleetingViews
 
 
-## Author
 
-<b>Name :</b> Bruno Arellano<br>
-<b>Email :</b> arellanobruno@hotmail.com<br>
-<b>Country :</b> COLOMBIA<br>
+## 📄 Documentation
+Full API and usage guide:
+🔗 https://arellanobrunoc.github.io/FleetingViews/
 
+
+
+
+    
