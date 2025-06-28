@@ -68,16 +68,16 @@ def main(page: ft.Page):
         print(params, name)
 
     fv.on_view_change = my_hook
-    button_home = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!",on_click=lambda e: fv.update_view("home", {"bgcolor":  ft.Colors.RED,'horizontal_alignment': ft.CrossAxisAlignment.START }))
+    button_home = ft.TextButton(ft.Text("Get data!"),icon=ft.Icons.DATA_ARRAY,on_click=lambda e: fv.update_view("home", {"bgcolor":  ft.Colors.RED,'horizontal_alignment': ft.CrossAxisAlignment.START }))
 
-    button_settings = ft.TextButton(icon=ft.Icons.DATA_ARRAY, text="Get data!", on_click=lambda e:   test())
+    button_settings = ft.TextButton(ft.Text("Get data!"),icon=ft.Icons.DATA_ARRAY, on_click=lambda e:   test())
 
     home_container = ft.Container(
 
         content=ft.Text("Im the text of page HOME", size=40),
         
      
-        alignment=ft.alignment.center,
+        alignment=ft.Alignment.center(),
                 expand=1
     )
     
@@ -86,7 +86,7 @@ def main(page: ft.Page):
         content=ft.TextField(),
         
      
-        alignment=ft.alignment.center,
+        alignment=ft.Alignment.center(),
                 expand=1
     )
 
@@ -122,4 +122,4 @@ def main(page: ft.Page):
 
 
 
-ft.app(target=main)
+ft.run(main)

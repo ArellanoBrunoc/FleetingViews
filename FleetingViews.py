@@ -329,7 +329,7 @@ class FleetingViews:
         return True
 
 
-    def view_go(self, view_name: str, back: bool = False, duration: int = 0, mode: str = "top_left", history_debug:bool = False):
+    def view_go(self, view_name: str, back: bool = False, history_debug:bool = False):
         if self.is_executing:
             return
         self.is_executing = True
@@ -361,8 +361,6 @@ class FleetingViews:
                 if hasattr(self.actual_view, "__on_dismount__"):
                     self._run_hook(getattr(self.actual_view, "__on_dismount__"), self)
 
-                if duration > 0:
-                    self.animation(duration, next_view_name=name, mode=mode)
 
                 try:
                     view_index = self.page.views.index(next_view)
@@ -510,6 +508,7 @@ class FleetingViews:
 
     def animation(self, duration, next_view_name, mode:str="top_left"):
         """
+        DEPRECATED FOR NOW
         Creates an animation for the chaning view action
 
         Args:
@@ -557,7 +556,7 @@ class FleetingViews:
                                     animate_position=ft.Animation(duration-10, ft.AnimationCurve.LINEAR),
                                     top=animation_modes[mode][0],
                                     left=animation_modes[mode][1],
-                                    alignment=ft.alignment.center,
+                                    alignment=ft.Alignment.center(),
                                     padding=self.views[next_view_name].padding
                                     
                                     )],
@@ -584,6 +583,8 @@ class FleetingViews:
 
     def open_drawer(self, drawer, position: str = "start"):
         """
+        
+        DEPRECATED IN FLET V1 ALPHA DONT USE.
         Opens the specified drawer on the given position ('start' or 'end') of the current view.
 
         Args:
@@ -822,13 +823,11 @@ def create_custom_view(route,
                        appbar: ft.AppBar = None,
                        auto_scroll: bool = True,  
                        bgcolor: str = None, 
-                       controls: list = [], 
-                       drawer: ft.NavigationDrawer = None,
-                       end_drawer: ft.NavigationDrawer = None, 
+                       controls: list = [],  
                        floating_action_button: ft.FloatingActionButton = None, 
+                       scroll_interval = 10,
                        horizontal_alignment: ft.CrossAxisAlignment = ft.CrossAxisAlignment.START, 
-                       on_scroll_interval: int = 10,
-                       padding: ft.Padding = ft.padding.all(10),
+                       padding: ft.Padding = ft.Padding.all(10),
                        scroll: ft.ScrollMode = None,
                         spacing: int = 10,
                         vertical_alignment: ft.MainAxisAlignment = ft.MainAxisAlignment.START):
@@ -838,12 +837,10 @@ def create_custom_view(route,
         appbar=appbar,
         bgcolor=bgcolor,
         controls=controls,
-        drawer=drawer,
-        end_drawer=end_drawer,
         floating_action_button=floating_action_button,
         horizontal_alignment=horizontal_alignment,
-        on_scroll_interval=on_scroll_interval,
         scroll=scroll,
+        scroll_interval=scroll_interval,
         vertical_alignment=vertical_alignment,
         padding=padding,
         spacing=spacing
@@ -885,12 +882,10 @@ def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = Tru
             auto_scroll=view_args.get('auto_scroll', True),
             bgcolor=view_args.get('bgcolor', None),
             controls=view_args.get('controls', []),
-            drawer=view_args.get('drawer', None),
-            end_drawer=view_args.get('end_drawer', None),
             floating_action_button=view_args.get('floating_action_button', None),
             horizontal_alignment=view_args.get('horizontal_alignment', ft.CrossAxisAlignment.START),
-            on_scroll_interval=view_args.get('on_scroll_interval', 10),
-            padding=view_args.get('padding', ft.padding.all(10)),
+            padding=view_args.get('padding', ft.Padding.all(10)),
+            scroll_interval=view_args.get("scroll_interval", 10),
             scroll=view_args.get('scroll', None),
             spacing=view_args.get('spacing', 10),
             vertical_alignment=view_args.get('vertical_alignment', ft.MainAxisAlignment.START)
@@ -921,7 +916,7 @@ def create_views(view_definitions: dict, page: ft.Page, fallback_404: bool = Tru
             vertical_alignment=ft.MainAxisAlignment.CENTER,
             auto_scroll=True,
             spacing=20,
-            padding=ft.padding.all(40),
+            padding=ft.Padding.all(40),
         )
         initialize_view(views_dict["404_not_found"], page)
 

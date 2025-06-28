@@ -2,11 +2,11 @@ from setuptools import setup, find_packages
 from pathlib import Path
 
 this_directory = Path(__file__).parent
-long_description = (this_directory / "README.md").read_text()
+long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="fleetingviews",
-    version="0.2",
+    version="0.2.dev5066",
     author="Bruno Arellano",
     author_email="arellanobruno@hotmail.com",
     py_modules=['FleetingViews'],
